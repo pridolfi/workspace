@@ -1,0 +1,7 @@
+*.launch
+.project
+.cproject
+project.mk
+tags
+.settings
+
