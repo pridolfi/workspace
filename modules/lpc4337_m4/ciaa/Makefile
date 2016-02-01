@@ -31,7 +31,7 @@
 
 ciaa_PATH := modules/lpc4337_m4/ciaa
 
-ciaa_C_FILES += $(wildcard $(ciaa_PATH)/src/*.c)
+ciaa_SRC_FILES += $(wildcard $(ciaa_PATH)/src/*.c)
 
 ciaa_SRC_FOLDERS += $(ciaa_PATH)/src
 

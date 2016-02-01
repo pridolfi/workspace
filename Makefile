@@ -39,7 +39,7 @@ include $(PROJECT)/Makefile
 
 include etc/target/$(TARGET).mk
 
-SYMBOLS += -DTARGET=$(TARGET) -DBOARD=$(BOARD)
+SYMBOLS += -D$(TARGET) -D$(BOARD)
 
 include $(foreach MOD,$(PROJECT_MODULES),$(MOD)/Makefile)
 

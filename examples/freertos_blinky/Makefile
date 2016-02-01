@@ -29,10 +29,18 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-freertos_PATH := modules/lpc4337_m4/freertos
+PROJECT_NAME := freertos_blinky
 
-freertos_SRC_FILES += $(wildcard $(freertos_PATH)/src/*.c)
+PROJECT_MODULES := modules/$(TARGET)/freertos \
+                   modules/$(TARGET)/base \
+		             modules/$(TARGET)/board \
+                   modules/$(TARGET)/chip
 
-freertos_SRC_FOLDERS += modules/lpc4337_m4/freertos/src
+PROJECT_PATH := examples/$(PROJECT_NAME)
 
-freertos_INC_FOLDERS += modules/lpc4337_m4/freertos/inc
+PROJECT_SRC_FOLDERS := $(PROJECT_PATH)/src
+
+PROJECT_INC_FOLDERS := $(PROJECT_PATH)/inc
+
+PROJECT_C_FILES   := $(wildcard $(PROJECT_PATH)/src/*.c)
+PROJECT_ASM_FILES := $(wildcard $(PROJECT_PATH)/src/*.S)

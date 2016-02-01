@@ -1,7 +1,7 @@
-# Copyright 2016, Pablo Ridolfi
+# Copyright 2015, Pablo Ridolfi
 # All rights reserved.
 #
-# This file is part of Workspace.
+# This file is part of lpc1769_template.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -29,10 +29,23 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-freertos_PATH := modules/lpc4337_m4/freertos
+# application name
+PROJECT_NAME := adc_fir_dac
 
-freertos_SRC_FILES += $(wildcard $(freertos_PATH)/src/*.c)
+# Modules needed by the application
+PROJECT_MODULES := 	modules/$(TARGET)/base \
+				modules/$(TARGET)/board \
+				modules/$(TARGET)/chip
 
-freertos_SRC_FOLDERS += modules/lpc4337_m4/freertos/src
+# application relative path
+PROJECT_PATH := examples/$(PROJECT_NAME)
 
-freertos_INC_FOLDERS += modules/lpc4337_m4/freertos/inc
+# source files folder
+PROJECT_SRC_FOLDERS := $(PROJECT_PATH)/src
+
+# header files folder
+PROJECT_INC_FOLDERS := $(PROJECT_PATH)/inc
+
+# source files
+PROJECT_C_FILES := $(wildcard $(PROJECT_PATH)/src/*.c)
+PROJECT_ASM_FILES := $(wildcard $(PROJECT_PATH)/src/*.S)
