@@ -32,11 +32,14 @@
 -include project.mk
 
 PROJECT ?= examples/blinky
-PROJECT_TARGET ?= lpc1769
+TARGET ?= lpc4337_m4
+BOARD ?= edu_ciaa_nxp
 
 include $(PROJECT)/Makefile
 
-include etc/target/$(PROJECT_TARGET).mk
+include etc/target/$(TARGET).mk
+
+SYMBOLS += -D$(TARGET) -D$(BOARD)
 
 include $(foreach MOD,$(PROJECT_MODULES),$(MOD)/Makefile)
 
@@ -94,7 +97,7 @@ clean:
 	rm -f *.launch
 
 download: $(PROJECT_NAME)
-	@echo "Downloading $(PROJECT_NAME).bin to $(PROJECT_TARGET)..."
+	@echo "Downloading $(PROJECT_NAME).bin to $(TARGET)..."
 	openocd -f $(CFG_FILE) -c "init" -c "halt 0" -c "flash write_image erase unlock $(OUT_PATH)/$(PROJECT_NAME).bin $(BASE_ADDR) bin" -c "reset run" -c "shutdown"
 	@echo "Download done."
 
@@ -105,7 +108,7 @@ erase:
 
 info:
 	@echo PROJECT_NAME: $(PROJECT_NAME)
-	@echo PROJECT_TARGET: $(PROJECT_TARGET)
+	@echo TARGET: $(TARGET)
 	@echo PROJECT_MODULES: $(PROJECT_MODULES)
 	@echo OBJS: $(PROJECT_OBJS)
 	@echo INCLUDES: $(INCLUDES)

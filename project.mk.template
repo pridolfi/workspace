@@ -37,4 +37,7 @@
 PROJECT = examples/blinky
 
 # current target
-PROJECT_TARGET = lpc4337_m4
+TARGET = lpc4337_m4
+
+# current board
+BOARD = edu_ciaa_nxp
