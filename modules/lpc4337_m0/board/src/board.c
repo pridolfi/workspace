@@ -127,7 +127,7 @@ static void Board_LED_Init()
 void Board_LED_Set(uint8_t LEDNumber, bool On)
 {
 	if (LEDNumber < (sizeof(gpioLEDBits) / sizeof(io_port_t)))
-		Chip_GPIO_SetPinState(LPC_GPIO_PORT, gpioLEDBits[LEDNumber].port, gpioLEDBits[LEDNumber].pin, (bool) !On);
+		Chip_GPIO_SetPinState(LPC_GPIO_PORT, gpioLEDBits[LEDNumber].port, gpioLEDBits[LEDNumber].pin, On);
 }
 
 bool Board_LED_Test(uint8_t LEDNumber)
