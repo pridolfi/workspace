@@ -96,6 +96,10 @@ clean:
 	rm -f $(OUT_PATH)/*.*
 	rm -f *.launch
 
+openocd:
+	@echo "Starting OpenOCD for $(TARGET)..."
+	@openocd -f $(CFG_FILE)
+
 download: $(PROJECT_NAME)
 	@echo "Downloading $(PROJECT_NAME).bin to $(TARGET)..."
 	@$(DOWNLOAD_CMD)
