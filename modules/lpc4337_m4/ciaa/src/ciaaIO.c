@@ -49,12 +49,12 @@ void ciaaIOInit(void)
 
 #if defined(EDU_CIAA_NXP)
    /* LEDs */
-   Chip_SCU_PinMux(2,0,MD_PUP,FUNC4);  /* GPIO5[0], LED0R */
-   Chip_SCU_PinMux(2,1,MD_PUP,FUNC4);  /* GPIO5[1], LED0G */
-   Chip_SCU_PinMux(2,2,MD_PUP,FUNC4);  /* GPIO5[2], LED0B */
-   Chip_SCU_PinMux(2,10,MD_PUP,FUNC0); /* GPIO0[14], LED1 */
-   Chip_SCU_PinMux(2,11,MD_PUP,FUNC0); /* GPIO1[11], LED2 */
-   Chip_SCU_PinMux(2,12,MD_PUP,FUNC0); /* GPIO1[12], LED3 */
+   Chip_SCU_PinMux(2,0,MD_PUP|MD_EZI,FUNC4);  /* GPIO5[0], LED0R */
+   Chip_SCU_PinMux(2,1,MD_PUP|MD_EZI,FUNC4);  /* GPIO5[1], LED0G */
+   Chip_SCU_PinMux(2,2,MD_PUP|MD_EZI,FUNC4);  /* GPIO5[2], LED0B */
+   Chip_SCU_PinMux(2,10,MD_PUP|MD_EZI,FUNC0); /* GPIO0[14], LED1 */
+   Chip_SCU_PinMux(2,11,MD_PUP|MD_EZI,FUNC0); /* GPIO1[11], LED2 */
+   Chip_SCU_PinMux(2,12,MD_PUP|MD_EZI,FUNC0); /* GPIO1[12], LED3 */
 
    Chip_GPIO_SetDir(LPC_GPIO_PORT, 5,(1<<0)|(1<<1)|(1<<2),1);
    Chip_GPIO_SetDir(LPC_GPIO_PORT, 0,(1<<14),1);
@@ -86,20 +86,20 @@ void ciaaIOInit(void)
    Chip_GPIO_SetDir(LPC_GPIO_PORT, 3, 0xF<<11, 0);
 
    /* MOSFETs */
-   Chip_SCU_PinMux(4,8,MD_PUP,FUNC4);  /* GPIO5[12] */
-   Chip_SCU_PinMux(4,9,MD_PUP,FUNC4);  /* GPIO5[13] */
-   Chip_SCU_PinMux(4,10,MD_PUP,FUNC4); /* GPIO5[14] */
-   Chip_SCU_PinMux(1,5,MD_PUP,FUNC0);  /* GPIO1[8]  */
+   Chip_SCU_PinMux(4,8,MD_PUP|MD_EZI,FUNC4);  /* GPIO5[12] */
+   Chip_SCU_PinMux(4,9,MD_PUP|MD_EZI,FUNC4);  /* GPIO5[13] */
+   Chip_SCU_PinMux(4,10,MD_PUP|MD_EZI,FUNC4); /* GPIO5[14] */
+   Chip_SCU_PinMux(1,5,MD_PUP|MD_EZI,FUNC0);  /* GPIO1[8]  */
    Chip_GPIO_SetDir(LPC_GPIO_PORT, 5,(1<<12)|(1<<13)|(1<<14),1);
    Chip_GPIO_SetDir(LPC_GPIO_PORT, 1,(1<<8),1);
    Chip_GPIO_ClearValue(LPC_GPIO_PORT, 5,(1<<12)|(1<<13)|(1<<14));
    Chip_GPIO_ClearValue(LPC_GPIO_PORT, 1,(1<<8));
 
    /* Relays */
-   Chip_SCU_PinMux(4,4,MD_PUP,FUNC0); /* GPIO2[4] */
-	Chip_SCU_PinMux(4,5,MD_PUP,FUNC0); /* GPIO2[5] */
-	Chip_SCU_PinMux(4,6,MD_PUP,FUNC0); /* GPIO2[6] */
-	Chip_SCU_PinMux(2,1,MD_PUP,FUNC4); /* GPIO5[1] */
+   Chip_SCU_PinMux(4,4,MD_PUP|MD_EZI,FUNC0); /* GPIO2[4] */
+	Chip_SCU_PinMux(4,5,MD_PUP|MD_EZI,FUNC0); /* GPIO2[5] */
+	Chip_SCU_PinMux(4,6,MD_PUP|MD_EZI,FUNC0); /* GPIO2[6] */
+	Chip_SCU_PinMux(2,1,MD_PUP|MD_EZI,FUNC4); /* GPIO5[1] */
    Chip_GPIO_SetDir(LPC_GPIO_PORT, 2,(1<<4)|(1<<5)|(1<<6),1);
    Chip_GPIO_SetDir(LPC_GPIO_PORT, 5,(1<<1),1);
    Chip_GPIO_ClearValue(LPC_GPIO_PORT, 2,(1<<4)|(1<<5)|(1<<6));
