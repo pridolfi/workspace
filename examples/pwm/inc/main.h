@@ -1,7 +1,7 @@
 /* Copyright 2015, Pablo Ridolfi
  * All rights reserved.
  *
- * This file is part of lpc1769_template.
+ * This file is part of Workspace.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
