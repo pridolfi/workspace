@@ -88,7 +88,7 @@ int main(void)
 {
 	initHardware();
 
-	xTaskCreate(task, (signed const char *)"task", configMINIMAL_STACK_SIZE*2, 0, tskIDLE_PRIORITY+1, 0);
+	xTaskCreate(task, (const char *)"task", configMINIMAL_STACK_SIZE*2, 0, tskIDLE_PRIORITY+1, 0);
 
 	vTaskStartScheduler();
 
