@@ -50,7 +50,7 @@ typedef struct {
 	uint8_t pin;
 } io_port_t;
 
-static const io_port_t gpioLEDBits[] = {{3, 5}, {0, 7}, {3, 7}};
+static const io_port_t gpioLEDBits[] = {{5,0},{5,1},{5,2},{0,14},{1,11},{1,12}};
 static uint32_t lcd_cfg_val;
 
 void Board_UART_Init(LPC_USART_T *pUART)
@@ -107,13 +107,21 @@ void Board_UARTPutSTR(const char *str)
 
 static void Board_LED_Init()
 {
-	uint32_t idx;
+	/* LEDs EDU-CIAA-NXP */
+	Chip_SCU_PinMux(2,0,MD_PUP|MD_EZI,FUNC4);  /* GPIO5[0], LED0R */
+	Chip_SCU_PinMux(2,1,MD_PUP|MD_EZI,FUNC4);  /* GPIO5[1], LED0G */
+	Chip_SCU_PinMux(2,2,MD_PUP|MD_EZI,FUNC4);  /* GPIO5[2], LED0B */
+	Chip_SCU_PinMux(2,10,MD_PUP|MD_EZI,FUNC0); /* GPIO0[14], LED1 */
+	Chip_SCU_PinMux(2,11,MD_PUP|MD_EZI,FUNC0); /* GPIO1[11], LED2 */
+	Chip_SCU_PinMux(2,12,MD_PUP|MD_EZI,FUNC0); /* GPIO1[12], LED3 */
 
-	for (idx = 0; idx < (sizeof(gpioLEDBits) / sizeof(io_port_t)); ++idx) {
-		/* Set pin direction and init to off */
-		Chip_GPIO_SetPinDIROutput(LPC_GPIO_PORT, gpioLEDBits[idx].port, gpioLEDBits[idx].pin);
-		Chip_GPIO_SetPinState(LPC_GPIO_PORT, gpioLEDBits[idx].port, gpioLEDBits[idx].pin, (bool) true);
-	}
+	Chip_GPIO_SetDir(LPC_GPIO_PORT, 5,(1<<0)|(1<<1)|(1<<2),1);
+	Chip_GPIO_SetDir(LPC_GPIO_PORT, 0,(1<<14),1);
+	Chip_GPIO_SetDir(LPC_GPIO_PORT, 1,(1<<11)|(1<<12),1);
+
+	Chip_GPIO_ClearValue(LPC_GPIO_PORT, 5,(1<<0)|(1<<1)|(1<<2));
+	Chip_GPIO_ClearValue(LPC_GPIO_PORT, 0,(1<<14));
+	Chip_GPIO_ClearValue(LPC_GPIO_PORT, 1,(1<<11)|(1<<12));
 }
 
 void Board_LED_Set(uint8_t LEDNumber, bool On)
