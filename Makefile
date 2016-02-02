@@ -98,7 +98,7 @@ clean:
 
 download: $(PROJECT_NAME)
 	@echo "Downloading $(PROJECT_NAME).bin to $(TARGET)..."
-	openocd -f $(CFG_FILE) -c "init" -c "halt 0" -c "flash write_image erase unlock $(OUT_PATH)/$(PROJECT_NAME).bin $(BASE_ADDR) bin" -c "reset run" -c "shutdown"
+	@$(DOWNLOAD_CMD)
 	@echo "Download done."
 
 erase:

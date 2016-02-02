@@ -65,3 +65,6 @@ CFG_FILE := etc/openocd/lpc4337.cfg
 
 # Flash base address for OpenOCD download rule
 BASE_ADDR := 0x1A000000
+
+# Download command
+DOWNLOAD_CMD := openocd -f $(CFG_FILE) -c "init" -c "halt 0" -c "flash write_image erase unlock $(OUT_PATH)/$(PROJECT_NAME).bin $(BASE_ADDR) bin" -c "reset run" -c "shutdown"
