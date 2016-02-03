@@ -44,7 +44,12 @@
 #endif
 
 #include "board.h"
+#ifdef lpc1769
 #include "arch/lpc17xx_40xx_emac.h"
+#else
+#include "arch/lpc18xx_43xx_emac.h"
+#endif
+
 #include "arch/lpc_arch.h"
 #include "arch/sys_arch.h"
 #include "lpc_phy.h"/* For the PHY monitor support */
@@ -146,18 +151,34 @@ static void vSetupIFTask (void *pvParameters) {
 
 				/* Set interface speed and duplex */
 				if (physts & PHY_LINK_SPEED100) {
+#ifdef lpc1769
 					Chip_ENET_Set100Mbps(LPC_ETHERNET);
+#else
+					Chip_ENET_SetSpeed(LPC_ETHERNET, 1);
+#endif
 					NETIF_INIT_SNMP(&lpc_netif, snmp_ifType_ethernet_csmacd, 100000000);
 				}
 				else {
+#ifdef lpc1769
 					Chip_ENET_Set10Mbps(LPC_ETHERNET);
+#else
+					Chip_ENET_SetSpeed(LPC_ETHERNET, 0);
+#endif
 					NETIF_INIT_SNMP(&lpc_netif, snmp_ifType_ethernet_csmacd, 10000000);
 				}
 				if (physts & PHY_LINK_FULLDUPLX) {
+#ifdef lpc1769
 					Chip_ENET_SetFullDuplex(LPC_ETHERNET);
+#else
+					Chip_ENET_SetDuplex(LPC_ETHERNET, true);
+#endif
 				}
 				else {
+#ifdef lpc1769
 					Chip_ENET_SetHalfDuplex(LPC_ETHERNET);
+#else
+					Chip_ENET_SetDuplex(LPC_ETHERNET, false);
+#endif
 				}
 
 				tcpip_callback_with_block((tcpip_callback_fn) netif_set_link_up,

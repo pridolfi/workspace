@@ -7,49 +7,23 @@
 #include <sys/unistd.h>
 #include "chip.h"
 
-#ifndef STDOUT_UART
-#define STDOUT_UART 2
-#endif
-
-#ifndef STDERR_UART
-#define STDERR_UART 2
-#endif
-
-#ifndef STDIN_UART
-#define STDIN_UART 2
-#endif
-
-#if STDIN_UART == 1
-	 #define MYSTDIN UART1
-#elif STDIN_UART == 2
-	 #define MYSTDIN LPC_UART2
-#elif STDIN_UART == 3
-	 #define MYSTDIN UART3
+#ifdef lpc1769
+#define MYSTDIN LPC_UART2
 #else
-	 #error "You defined STDIN_UART wrong!"
+#define MYSTDIN LPC_USART2
 #endif
 
-#if STDOUT_UART == 1
-	 #define MYSTDOUT UART1
-#elif STDOUT_UART == 2
-	 #define MYSTDOUT LPC_UART2
-#elif STDOUT_UART == 3
-	 #define MYSTDOUT UART3
+#ifdef lpc1769
+#define MYSTDOUT LPC_UART2
 #else
-	 #error "You defined STDOUT_UART wrong!"
+#define MYSTDOUT LPC_USART2
 #endif
 
-#if STDERR_UART == 1
-	 #define MYSTDERR UART1
-#elif STDERR_UART == 2
-	 #define MYSTDERR LPC_UART2
-#elif STDERR_UART == 3
-	 #define MYSTDERR UART3
+#ifdef lpc1769
+#define MYSTDERR LPC_UART2
 #else
-	 #error "You defined STDERR_UART wrong!"
+#define MYSTDERR LPC_USART2
 #endif
-
-
 
 /*
  environ
