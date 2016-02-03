@@ -11,6 +11,11 @@
 
 int adcFlag=0;
 
+#ifdef lpc4337_m4
+#define LPC_ADC LPC_ADC0
+#define ADC_IRQn ADC0_IRQn
+#endif
+
 /* P0.23 -> AD0 */
 void adcInit(void)
 {
