@@ -11,3 +11,10 @@ Embedded software development workspace for microcontrollers.
 
 ## Supported toolchains:
 - gcc-arm-none-eabi
+
+## Usage
+* Copy ```project.mk.template``` to ```project.mk```.
+* Define ```PROJECT```, ```TARGET``` and ```BOARD``` (optional) variables in ```project.mk``` according to the project you want to compile.
+* Compile with ```make```.
+* Clean with ```make clean```.
+* Download to target via OpenOCD with ```make download```.
