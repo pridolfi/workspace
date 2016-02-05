@@ -33,10 +33,10 @@
 
 #include "ciaaIO.h"
 
-#if defined(EDU_CIAA_NXP)
+#ifdef edu_ciaa_nxp
 ciaaPin_t inputs[4] = { {0,4},{0,8},{0,9},{1,9} };
 ciaaPin_t outputs[6] = { {5,0},{5,1},{5,2},{0,14},{1,11},{1,12} };
-#elif defined(CIAA_NXP)
+#elif defined(ciaa_nxp)
 ciaaPin_t inputs[8] = { {2,0},{2,1},{2,2},{2,3},{3,11},{3,12},{3,13},{3,14} };
 ciaaPin_t outputs[8] = { {5,1},{2,6},{2,5},{2,4},{5,12},{5,13},{5,14},{1,8} };
 #else
@@ -47,7 +47,7 @@ void ciaaIOInit(void)
 {
 	Chip_GPIO_Init(LPC_GPIO_PORT);
 
-#if defined(EDU_CIAA_NXP)
+#if defined(edu_ciaa_nxp)
    /* LEDs */
    Chip_SCU_PinMux(2,0,MD_PUP|MD_EZI,FUNC4);  /* GPIO5[0], LED0R */
    Chip_SCU_PinMux(2,1,MD_PUP|MD_EZI,FUNC4);  /* GPIO5[1], LED0G */
@@ -72,7 +72,7 @@ void ciaaIOInit(void)
 
    Chip_GPIO_SetDir(LPC_GPIO_PORT, 0,(1<<4)|(1<<8)|(1<<9),0);
    Chip_GPIO_SetDir(LPC_GPIO_PORT, 1,(1<<9),0);
-#elif defined(CIAA_NXP)
+#elif defined(ciaa_nxp)
 	/* Inputs */
    Chip_SCU_PinMux(4,0,MD_PUP|MD_EZI|MD_ZI,FUNC0); /* GPIO2[0]  */
    Chip_SCU_PinMux(4,1,MD_PUP|MD_EZI|MD_ZI,FUNC0); /* GPIO2[1]  */
