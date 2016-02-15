@@ -30,7 +30,7 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 # application name
-PROJECT_NAME := $(lastword $(subst /, ,$(PROJECT)))
+PROJECT_NAME := $(notdir $(PROJECT))
 
 # Modules needed by the application
 PROJECT_MODULES := modules/$(TARGET)/freertos \
@@ -38,15 +38,12 @@ PROJECT_MODULES := modules/$(TARGET)/freertos \
                    modules/$(TARGET)/board \
                    modules/$(TARGET)/chip
 
-# application relative path
-PROJECT_PATH := $(PROJECT)
-
 # source files folder
-PROJECT_SRC_FOLDERS := $(PROJECT_PATH)/src
+PROJECT_SRC_FOLDERS := $(PROJECT)/src
 
 # header files folder
-PROJECT_INC_FOLDERS := $(PROJECT_PATH)/inc
+PROJECT_INC_FOLDERS := $(PROJECT)/inc
 
 # source files
-PROJECT_C_FILES := $(wildcard $(PROJECT_PATH)/src/*.c)
-PROJECT_ASM_FILES := $(wildcard $(PROJECT_PATH)/src/*.S)
+PROJECT_C_FILES := $(wildcard $(PROJECT)/src/*.c)
+PROJECT_ASM_FILES := $(wildcard $(PROJECT)/src/*.S)
