@@ -29,17 +29,23 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-PROJECT_NAME := blinky
+# application name
+PROJECT_NAME := $(lastword $(subst /, ,$(PROJECT)))
 
+# Modules needed by the application
 PROJECT_MODULES := modules/$(TARGET)/base \
                    modules/$(TARGET)/board \
                    modules/$(TARGET)/chip
 
-PROJECT_PATH := examples/$(PROJECT_NAME)
+# application relative path
+PROJECT_PATH := $(PROJECT)
 
+# source files folder
 PROJECT_SRC_FOLDERS := $(PROJECT_PATH)/src
 
+# header files folder
 PROJECT_INC_FOLDERS := $(PROJECT_PATH)/inc
 
-PROJECT_C_FILES   := $(wildcard $(PROJECT_PATH)/src/*.c)
+# source files
+PROJECT_C_FILES := $(wildcard $(PROJECT_PATH)/src/*.c)
 PROJECT_ASM_FILES := $(wildcard $(PROJECT_PATH)/src/*.S)

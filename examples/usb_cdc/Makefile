@@ -30,7 +30,7 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 # application name
-PROJECT_NAME := usb_cdc
+PROJECT_NAME := $(lastword $(subst /, ,$(PROJECT)))
 
 # Modules needed by the application
 PROJECT_MODULES := modules/$(TARGET)/freertos \
@@ -39,7 +39,7 @@ PROJECT_MODULES := modules/$(TARGET)/freertos \
                    modules/$(TARGET)/chip
 
 # application relative path
-PROJECT_PATH := examples/$(PROJECT_NAME)
+PROJECT_PATH := $(PROJECT)
 
 # source files folder
 PROJECT_SRC_FOLDERS := $(PROJECT_PATH)/src

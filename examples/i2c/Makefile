@@ -1,4 +1,4 @@
-# Copyright 2015, Pablo Ridolfi
+# Copyright 2016, Pablo Ridolfi
 # All rights reserved.
 #
 # This file is part of Workspace.
@@ -30,15 +30,15 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 # application name
-PROJECT_NAME := i2c
+PROJECT_NAME := $(lastword $(subst /, ,$(PROJECT)))
 
 # Modules needed by the application
 PROJECT_MODULES := modules/$(TARGET)/base \
-		           modules/$(TARGET)/board \
+                   modules/$(TARGET)/board \
                    modules/$(TARGET)/chip
 
 # application relative path
-PROJECT_PATH := examples/$(PROJECT_NAME)
+PROJECT_PATH := $(PROJECT)
 
 # source files folder
 PROJECT_SRC_FOLDERS := $(PROJECT_PATH)/src
