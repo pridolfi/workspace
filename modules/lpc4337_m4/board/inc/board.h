@@ -113,7 +113,7 @@ extern "C" {
 // #define CFG_SDCARD
 
 #define BUTTONS_BUTTON1_GPIO_PORT_NUM   0
-#define BUTTONS_BUTTON1_GPIO_BIT_NUM    7
+#define BUTTONS_BUTTON1_GPIO_BIT_NUM    4
 #define LED1_GPIO_PORT_NUM              1
 #define LED1_GPIO_BIT_NUM               11
 #define LED2_GPIO_PORT_NUM              1
