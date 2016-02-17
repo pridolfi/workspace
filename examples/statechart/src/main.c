@@ -68,6 +68,7 @@ static void initHardware(void);
 
 /*==================[internal functions definition]==========================*/
 
+/** clock and peripherals initialization */
 static void initHardware(void)
 {
 	Board_Init();
@@ -78,11 +79,17 @@ static void initHardware(void)
 
 /*==================[external functions definition]==========================*/
 
+/** state machine user-defined external function (action)
+ *
+ * @param handle state machine instance
+ * @param onoff state machine operation parameter
+ */
 void idleblinkIface_opLED(Idleblink* handle, const sc_boolean onoff)
 {
-	Board_LED_Set(0, onoff);
+	Board_LED_Set(LED, onoff);
 }
 
+/** SysTick interrupt handler */
 void SysTick_Handler(void)
 {
 	/* send evTick event to state machine every 1ms */
@@ -92,6 +99,7 @@ void SysTick_Handler(void)
 	idleblink_runCycle(&statechart);
 }
 
+/** main function, application entry point */
 int main(void)
 {
 	/* init and reset state machine */
