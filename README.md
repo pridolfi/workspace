@@ -9,6 +9,12 @@ Embedded software development workspace for microcontrollers.
 - CIAA-NXP and EDU-CIAA-NXP (www.proyecto-ciaa.com.ar)
 - LPCXpresso with LPC1769
 
+## Available libraries:
+- [CMSIS](http://www.arm.com/products/processors/cortex-m/cortex-microcontroller-software-interface-standard.php) and [LPCOpen](https://www.lpcware.com/lpcopen)
+- [CMSIS-DSPLIB](http://www.keil.com/pack/doc/CMSIS/DSP/html/index.html)
+- [lwip](http://lwip.wikia.com/wiki/LwIP_Wiki)
+- [FreeRTOS](http://www.freertos.org/)
+
 ## Supported toolchains:
 - gcc-arm-none-eabi
 
