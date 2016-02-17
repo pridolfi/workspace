@@ -13,6 +13,8 @@ Embedded software development workspace for microcontrollers.
 - gcc-arm-none-eabi
 
 ## Usage
+* Make sure you have an ```arm-none-eabi-*``` toolchain configured in your ```PATH```.
+* ```git clone https://github.com/pridolfi/workspace.git && cd workspace```
 * Copy ```project.mk.template``` to ```project.mk```.
 * Define ```PROJECT```, ```TARGET``` and ```BOARD``` (optional) variables in ```project.mk``` according to the project you want to compile.
 * Compile with ```make```.
