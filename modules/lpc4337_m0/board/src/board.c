@@ -133,7 +133,7 @@ void Board_LED_Set(uint8_t LEDNumber, bool On)
 bool Board_LED_Test(uint8_t LEDNumber)
 {
 	if (LEDNumber < (sizeof(gpioLEDBits) / sizeof(io_port_t)))
-		return (bool) !Chip_GPIO_GetPinState(LPC_GPIO_PORT, gpioLEDBits[LEDNumber].port, gpioLEDBits[LEDNumber].pin);
+		return (bool) Chip_GPIO_GetPinState(LPC_GPIO_PORT, gpioLEDBits[LEDNumber].port, gpioLEDBits[LEDNumber].pin);
 
 	return false;
 }
