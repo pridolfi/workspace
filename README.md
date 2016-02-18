@@ -4,10 +4,12 @@ Embedded software development workspace for microcontrollers.
 ## Supported targets:
 - LPC1769
 - LPC4337 (M4 and M0 cores)
+- LPC54102 (M4 core)
 
 ## Supported boards:
 - CIAA-NXP and EDU-CIAA-NXP (www.proyecto-ciaa.com.ar)
 - LPCXpresso with LPC1769
+- LPCXpresso with LPC54102
 
 ## Available libraries:
 - [CMSIS](http://www.arm.com/products/processors/cortex-m/cortex-microcontroller-software-interface-standard.php) and [LPCOpen](https://www.lpcware.com/lpcopen)
