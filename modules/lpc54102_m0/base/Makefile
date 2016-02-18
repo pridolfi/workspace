@@ -28,41 +28,12 @@
 # CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
-################################################################################
-#                Target Makefile for LPC4337 microcontroller                   #
-################################################################################
 
-# Target name
-TARGET_NAME := lpc4337_m0
+base_PATH := modules/lpc54102_m0/base
 
-# Default cross-toolchain
-CROSS_PREFIX ?= arm-none-eabi-
+base_SRC_FILES := $(wildcard $(base_PATH)/src/*.c) \
+                  $(wildcard $(base_PATH)/src/*.S)
 
-# variables de rutas o carpetas
-OUT_PATH = out/$(TARGET_NAME)
-OBJ_PATH = $(OUT_PATH)/obj
+base_INC_FOLDERS := $(base_PATH)/inc
 
-# Defined symbols
-SYMBOLS += -DDEBUG -DCORE_M0 -D__USE_LPCOPEN -D__LPC43XX__ -D__CODE_RED \
-           -D__MULTICORE_M0APP -DCORE_M0APP
-
-# Compilation flags
-CFLAGS  := -Wall -ggdb3 -mcpu=cortex-m0 -mthumb -fdata-sections -ffunction-sections
-
-# Linking flags
-LFLAGS  := -nostdlib -fno-builtin -mcpu=cortex-m0 -mthumb \
-			  -Xlinker -Map=$(OUT_PATH)/$(PROJECT_NAME).map \
-			  -Wl,--gc-sections
-
-# Linker scripts
-LD_FILE := -Tetc/ld/lpc4337_m0_lib.ld -Tetc/ld/lpc4337_m0_mem.ld \
-           -Tetc/ld/lpc4337_m0.ld
-
-# OpenOCD configuration file
-CFG_FILE := etc/openocd/lpc4337.cfg
-
-# Flash base address for OpenOCD download rule
-BASE_ADDR := 0x1B000000
-
-# Download command
-DOWNLOAD_CMD := openocd -f $(CFG_FILE) -c "init" -c "halt 0" -c "flash write_image erase unlock $(OUT_PATH)/$(PROJECT_NAME).bin $(BASE_ADDR) bin" -c "reset run" -c "shutdown"
+base_SRC_FOLDERS := $(base_PATH)/src
