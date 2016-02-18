@@ -39,5 +39,5 @@ chip_INC_FOLDERS := $(chip_PATH)/inc
 chip_SRC_FOLDERS := $(chip_PATH)/src
 
 EXTERN_LIB_FOLDERS += $(chip_PATH)/libs
-EXTERN_LIBS += power_m0 power
+EXTERN_LIBS += power_m0
 

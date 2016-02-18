@@ -34,10 +34,10 @@ chip_PATH := modules/lpc54102_m4/chip
 chip_SRC_FILES := $(wildcard $(chip_PATH)/src/*.c) \
                   $(wildcard $(chip_PATH)/src/*.S)
 
-chip_INC_FOLDERS := $(chip_PATH)/inc $(chip_PATH)/inc/usbd
+chip_INC_FOLDERS := $(chip_PATH)/inc
 
 chip_SRC_FOLDERS := $(chip_PATH)/src
 
 EXTERN_LIB_FOLDERS += $(chip_PATH)/libs
-EXTERN_LIBS += power_m0 power_m4f_hard power
+EXTERN_LIBS += power
 
