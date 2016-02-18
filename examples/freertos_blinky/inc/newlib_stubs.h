@@ -23,6 +23,10 @@
 #define LPC_UART2 LPC_USART2
 #endif
 
+#ifdef lpc54102_m4
+#define LPC_UART2 LPC_USART2
+#endif
+
 #if STDIN_UART == 1
 	 #define MYSTDIN UART1
 #elif STDIN_UART == 2
