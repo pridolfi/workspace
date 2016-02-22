@@ -98,6 +98,13 @@ clean:
 	rm -f $(OUT_PATH)/*.*
 	rm -f *.launch
 
+clean_all:
+	@make TARGET=lpc1769 clean --no-print-directory
+	@make TARGET=lpc4337_m0 clean --no-print-directory
+	@make TARGET=lpc4337_m4 clean --no-print-directory
+	@make TARGET=lpc54102_m0 clean --no-print-directory
+	@make TARGET=lpc54102_m4 clean --no-print-directory
+
 openocd:
 	@echo "Starting OpenOCD for $(TARGET)..."
 	@openocd -f $(CFG_FILE)
