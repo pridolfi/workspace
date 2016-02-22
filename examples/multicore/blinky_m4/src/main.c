@@ -97,9 +97,6 @@ void SysTick_Handler(void)
 
 int main(void)
 {
-	uint32_t * stackAddr;
-	uint32_t * jumpAddr;
-
 	initHardware();
 
 	/* Boot M0 core, using reset vector and stack pointer from the CM0+
