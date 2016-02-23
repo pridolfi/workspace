@@ -4,7 +4,7 @@ Embedded software development workspace for microcontrollers.
 ## Supported targets:
 - LPC1769
 - LPC4337 (M4 and M0 cores)
-- LPC54102 (M4 and M0 cores)
+- LPC54102 (M4 and M0+ cores)
 
 ## Supported boards:
 - CIAA-NXP and EDU-CIAA-NXP (www.proyecto-ciaa.com.ar)
@@ -26,5 +26,5 @@ Embedded software development workspace for microcontrollers.
 * ```cp project.mk.template project.mk```
 * Define ```PROJECT```, ```TARGET``` and ```BOARD``` (optional) variables in ```project.mk``` according to the project you want to compile.
 * Compile with ```make```.
-* Clean with ```make clean```. Clean for all targets with ```make clean_all```
+* Clean with ```make clean```. Clean for all targets with ```make clean_all```.
 * Download to target via OpenOCD with ```make download```.
