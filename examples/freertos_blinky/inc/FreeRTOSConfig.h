@@ -160,12 +160,46 @@ See http://www.FreeRTOS.org/RTOS-Cortex-M3-M4.html. */
 #define config_ETHERNET_INTERRUPT_PRIORITY (configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY + 1)
 
 #else
+#if defined(CORE_M0PLUS)
+
+/* Cortex-M specific definitions. */
+#ifdef __NVIC_PRIO_BITS
+	/* __BVIC_PRIO_BITS will be specified when CMSIS is being used. */
+	#define configPRIO_BITS       		__NVIC_PRIO_BITS
+#else
+	#define configPRIO_BITS       		5        /* 32 priority levels */
+#endif
+
+/* The lowest interrupt priority that can be used in a call to a "set priority"
+function. */
+#define configLIBRARY_LOWEST_INTERRUPT_PRIORITY			0x1f
+
+/* The highest interrupt priority that can be used by any interrupt service
+routine that makes calls to interrupt safe FreeRTOS API functions.  DO NOT CALL
+INTERRUPT SAFE FREERTOS API FUNCTIONS FROM ANY INTERRUPT THAT HAS A HIGHER
+PRIORITY THAN THIS! (higher priorities are lower numeric values. */
+#define configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY	5
+
+/* Interrupt priorities used by the kernel port layer itself.  These are generic
+to all Cortex-M ports, and do not rely on any particular library functions. */
+#define configKERNEL_INTERRUPT_PRIORITY 		( configLIBRARY_LOWEST_INTERRUPT_PRIORITY << (8 - configPRIO_BITS) )
+#define configMAX_SYSCALL_INTERRUPT_PRIORITY 	( configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY << (8 - configPRIO_BITS) )
+
+/* Normal assert() semantics without relying on the provision of an assert.h
+header file. */
+#define configASSERT( x ) if( ( x ) == 0 ) { taskDISABLE_INTERRUPTS(); for( ;; ); }
+
+#define configUSE_CUSTOM_TICK 0
+
+#else
+
 #if defined(CORE_M0)
 #error FreeRTOS CM0 support NOT YET DEFINED
 
 #else
 #error FreeRTOS setup NOT DEFINED
 #endif /* defined(CORE_M0) */
+#endif /* defined(CORE_M0PLUS) */
 #endif /* defined(CORE_M4) */
 #endif /* defined(CORE_M3) */
 
