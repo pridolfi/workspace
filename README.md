@@ -2,6 +2,7 @@
 Embedded software development workspace for microcontrollers.
 
 ## Supported targets:
+- LPC11U68
 - LPC1769
 - LPC4337 (M4 and M0 cores)
 - LPC54102 (M4 and M0+ cores)
