@@ -74,26 +74,10 @@ extern "C" {
  */
 
 /* Board name */
-#define BOARD_NXP_LPCXPRESSO_4337
+#define BOARD_NGX_XPLORER_4330
 
 /* Build for RMII interface */
 #define USE_RMII
-#define BOARD_ENET_PHY_ADDR	0x00
-
-/* LCD interface defines */
-#define LCD_SSP              LPC_SSP1
-#define LCD_CDM_PORT         6
-#define LCD_CMD_PIN          5
-#define LCD_CMD_CFG          (SCU_MODE_INBUFF_EN | SCU_MODE_PULLUP | SCU_MODE_FUNC0)
-#define LCD_CMD_GPIO_PORT    3
-#define LCD_CMD_GPIO_PIN     4
-#define LCD_BIT_RATE         1000000 /* 1 MHz */
-
-/* Audio Codec defines */
-#define I2CDEV_WM8904_ADDR     (0x34 >> 1)
-#define WM8904_I2C_BUS         I2C1
-#define CODEC_LINE_IN          0 /* Mic */
-#define AUDCFG_SAMPLE_RATE     16000
 
 /* For USBLIB examples */
 #define LEDS_LED1           0x01
@@ -118,13 +102,6 @@ extern "C" {
 #define LED1_GPIO_BIT_NUM               11
 #define LED2_GPIO_PORT_NUM              1
 #define LED2_GPIO_BIT_NUM               12
-
-/* USB1 VBUS Enable GPIO pins */
-#define USB1_VBUS_PORT_NUM          2
-#define USB1_VBUS_PIN_NUM           5
-#define USB1_VBUS_PIN_CFG           (SCU_MODE_PULLUP | SCU_MODE_INBUFF_EN | SCU_MODE_ZIF_DIS | SCU_MODE_FUNC4)
-#define USB1_VBUS_GPIO_PORT_NUM     5
-#define USB1_VBUS_GPIO_BIT_NUM      5
 
 /**
  * @brief	Sets up board specific I2C interface
@@ -156,28 +133,6 @@ STATIC INLINE void Board_I2C_EnableFastPlus(I2C_ID_T id)
 STATIC INLINE void Board_I2C_DisableFastPlus(I2C_ID_T id)
 {
 	Chip_SCU_I2C0PinConfig(I2C0_STANDARD_FAST_MODE);
-}
-
-/**
- * @brief	Enable VBUS to USB1 port in Host mode
- * @return	Nothing
- * @sa		Board_USB1_DisableVbus()
- */
-__STATIC_INLINE void Board_USB1_EnableVbus(void)
-{
-	Chip_GPIO_SetPinDIROutput(LPC_GPIO_PORT, USB1_VBUS_GPIO_PORT_NUM, USB1_VBUS_GPIO_BIT_NUM);
-	Chip_GPIO_SetPinOutLow(LPC_GPIO_PORT, USB1_VBUS_GPIO_PORT_NUM, USB1_VBUS_GPIO_BIT_NUM);
-}
-
-/**
- * @brief	Disable VBUS to USB1 port
- * @return	Nothing
- * @sa		Board_USB1_EnableVbus()
- */
-__STATIC_INLINE void Board_USB1_DisableVbus(void)
-{
-	Chip_GPIO_SetPinDIROutput(LPC_GPIO_PORT, USB1_VBUS_GPIO_PORT_NUM, USB1_VBUS_GPIO_BIT_NUM);
-	Chip_GPIO_SetPinOutHigh(LPC_GPIO_PORT, USB1_VBUS_GPIO_PORT_NUM, USB1_VBUS_GPIO_BIT_NUM);
 }
 
 /**
@@ -238,45 +193,11 @@ uint8_t Joystick_GetStatus(void);
 uint32_t Buttons_GetStatus (void);
 
 /**
- * @brief	Initialize I2S interface for the board and UDA1380
- * @param	pI2S	: Pointer to I2S register interface used on this board
- * @param	micIn	: If 1 MIC will be used as input, if 0 LINE_IN will be used
- * @return	Nothing
- */
-void Board_Audio_Init(LPC_I2S_T *pI2S, int micIn);
-
-/**
- * @brief	Initialize DAC
- * @param	pDAC	: Pointer to DAC register interface used on this board
- * @return	Nothing
- */
-void Board_DAC_Init(LPC_DAC_T *pDAC);
-
-/**
- * @brief	Initialize ADC
- * @return	Nothing
- */
-STATIC INLINE void Board_ADC_Init(void){}
-
-/**
- * @brief	Initialize Pinmuxing for the LCD interface
- * @return	Nothing
- */
-void Board_LCD_Init(void);
-
-/**
- * @brief	Write given data to LCD module
- * @param	data	: data to be written
- * @param	size	: number of data items
- * @return	Nothing
- */
-void Board_LCD_WriteData(const uint8_t *data, uint16_t size);
-
-/**
  * @}
  */
 
 #include "board_api.h"
+#include "lpc_phy.h"
 
 #ifdef __cplusplus
 }

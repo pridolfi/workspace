@@ -55,6 +55,9 @@
 #include "lpc_phy.h"/* For the PHY monitor support */
 #include "tcpecho.h"
 
+#if defined(lpc4337_m4)
+#include "ciaaIO.h"
+#endif
 
 /*****************************************************************************
  * Private types/enumerations/variables
@@ -76,6 +79,10 @@ static void prvSetupHardware(void)
 {
 	SystemCoreClockUpdate();
 	Board_Init();
+
+#if defined(lpc4337_m4)
+	ciaaIOInit();
+#endif
 
 	/* LED0 is used for the link status, on = PHY cable detected */
 	/* Initial LED state is off to show an unconnected cable state */

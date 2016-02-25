@@ -39,6 +39,10 @@ PROJECT_MODULES := modules/$(TARGET)/lwip \
                    modules/$(TARGET)/board \
                    modules/$(TARGET)/chip
 
+ifeq ($(TARGET),lpc4337_m4)
+PROJECT_MODULES += modules/$(TARGET)/ciaa
+endif
+
 # source files folder
 PROJECT_SRC_FOLDERS := $(PROJECT)/src
 

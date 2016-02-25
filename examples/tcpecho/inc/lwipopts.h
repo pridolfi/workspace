@@ -134,6 +134,8 @@
 #define MEMP_MEM_MALLOC                 1
 
 /* Needed for malloc/free */
-#include <stdlib.h>
+#include "FreeRTOS.h"
+#define malloc pvPortMalloc
+#define free vPortFree
 
 #endif /* __LWIPOPTS_H_ */
