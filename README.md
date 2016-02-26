@@ -29,3 +29,6 @@ Embedded software development workspace for microcontrollers.
 * Compile with ```make```.
 * Clean with ```make clean```. Clean for all targets with ```make clean_all```.
 * Download to target via OpenOCD with ```make download```.
+
+## Acknowledgements
+This was possible thanks to the Argentine Open Industrial Computer project (Proyecto CIAA). See more about the project at www.github.com/ciaa and www.proyecto-ciaa.com.ar.
