@@ -32,4 +32,4 @@ Embedded software development workspace for microcontrollers.
 * Download to target via OpenOCD with ```make download```.
 
 ## Acknowledgements
-This was possible thanks to the Argentine Open Industrial Computer project (Proyecto CIAA). See more about the project at www.github.com/ciaa and www.proyecto-ciaa.com.ar.
+This was possible thanks to the Argentine Open Industrial Computer project (Proyecto CIAA). See more about the project at http://www.github.com/ciaa and http://www.proyecto-ciaa.com.ar.
