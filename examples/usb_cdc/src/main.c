@@ -184,7 +184,7 @@ int main(void)
 #if defined(lpc1769)
 void EINT3_IRQHandler(void)
 #elif defined(lpc4337_m4)
-void PIN_INT0_IRQHandler(void)
+void GPIO0_IRQHandler(void)
 #else
 void foo_IRQHandler(void)
 #endif
