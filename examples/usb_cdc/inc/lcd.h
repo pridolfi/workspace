@@ -11,7 +11,7 @@
 #define LCD_H_
 
 	/* Puerto y pines a los que se conecta el display */
-	#define LCD_PORT	LPC_GPIO2
+	#define LCD_PORT	2
 	#define LCD_D4 		1<<5
 	#define LCD_D5 		1<<6
 	#define LCD_D6 		1<<7

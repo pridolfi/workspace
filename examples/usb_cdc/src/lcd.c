@@ -12,18 +12,20 @@
 
 uint32_t usTicks;
 
+#if (defined(lpc4337_m4))
+#define LPC_GPIO LPC_GPIO_PORT
+#endif
 
 /* Inicializa al display mediante instrucciones en modo 4-bit */
 void LCD_Init(void)
 {
-	/* Se configuran a los 6 pines como salidas (en este caso están todos conectados en el puerto 2) */
-	LCD_PORT->DIR |= LCD_D4|LCD_D5|LCD_D6|LCD_D7|LCD_RS|LCD_EN;
+	/* Se configuran a los 6 pines como salidas (en este caso están todos conectados en el puerto LCD_PORT) */
+	Chip_GPIO_SetPortDIROutput(LPC_GPIO, LCD_PORT, LCD_D4|LCD_D5|LCD_D6|LCD_D7|LCD_RS|LCD_EN);
 
 	/* Se inicializa al Timer 1 */
 	LCD_Tim1Init();
 
-	LCD_PORT->CLR = LCD_RS;
-	LCD_PORT->CLR = LCD_EN;
+	Chip_GPIO_SetPortOutLow(LPC_GPIO, LCD_PORT, LCD_RS|LCD_EN);
 
 	/* Se envían tres nibbles 0x03 con los delays correspondientes */
 	LCD_usDelay(16000);
@@ -50,29 +52,28 @@ void LCD_Init(void)
 void LCD_SendNibble(uint8_t theNibble)
 {
 	/* Se coloca cada bit del nibble en el pin correspondiente */
-	if (theNibble & 0x01) (LCD_PORT->SET = LCD_D4);
-	else			   	  (LCD_PORT->CLR = LCD_D4);
+	if (theNibble & 0x01) Chip_GPIO_SetPortOutHigh(LPC_GPIO, LCD_PORT, LCD_D4);
+	else			   	  Chip_GPIO_SetPortOutLow(LPC_GPIO, LCD_PORT, LCD_D4);
 
-	if (theNibble & 0x02) (LCD_PORT->SET = LCD_D5);
-	else			      (LCD_PORT->CLR = LCD_D5);
+	if (theNibble & 0x02) Chip_GPIO_SetPortOutHigh(LPC_GPIO, LCD_PORT, LCD_D5);
+	else			      Chip_GPIO_SetPortOutLow(LPC_GPIO, LCD_PORT, LCD_D5);
 
-	if (theNibble & 0x04) (LCD_PORT->SET = LCD_D6);
-	else			   	  (LCD_PORT->CLR = LCD_D6);
+	if (theNibble & 0x04) Chip_GPIO_SetPortOutHigh(LPC_GPIO, LCD_PORT, LCD_D6);
+	else			   	  Chip_GPIO_SetPortOutLow(LPC_GPIO, LCD_PORT, LCD_D6);
 
-	if (theNibble & 0x08) (LCD_PORT->SET = LCD_D7);
-	else			      (LCD_PORT->CLR = LCD_D7);
+	if (theNibble & 0x08) Chip_GPIO_SetPortOutHigh(LPC_GPIO, LCD_PORT, LCD_D7);
+	else			      Chip_GPIO_SetPortOutLow(LPC_GPIO, LCD_PORT, LCD_D7);
 
-	LCD_PORT->SET = LCD_EN;
+	Chip_GPIO_SetPortOutHigh(LPC_GPIO, LCD_PORT, LCD_EN);
 	LCD_usDelay(5);
-	LCD_PORT->CLR = LCD_EN;
+	Chip_GPIO_SetPortOutLow(LPC_GPIO, LCD_PORT, LCD_EN);
 	LCD_usDelay(5);
 }
-
 
 /* Envía un caracter al display */
 void LCD_SendChar(char theChar)
 {
-	LCD_PORT->SET = LCD_RS;
+	Chip_GPIO_SetPortOutHigh(LPC_GPIO, LCD_PORT, LCD_RS);
 
 	LCD_SendByte(theChar);
 
@@ -83,7 +84,7 @@ void LCD_SendChar(char theChar)
 /* Envía una instrucción al display */
 void LCD_SendInstruction(uint8_t theInstruction)
 {
-	LCD_PORT->CLR = LCD_RS;
+	Chip_GPIO_SetPortOutLow(LPC_GPIO, LCD_PORT, LCD_RS);
 
 	LCD_SendByte(theInstruction);
 

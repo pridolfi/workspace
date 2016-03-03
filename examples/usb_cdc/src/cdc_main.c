@@ -54,6 +54,7 @@
 static USBD_HANDLE_T g_hUsb;
 static uint8_t g_rxBuff[256];
 
+#if defined(lpc1769)
 extern const  USBD_HW_API_T hw_api;
 extern const  USBD_CORE_API_T core_api;
 extern const  USBD_CDC_API_T cdc_api;
@@ -70,6 +71,9 @@ static const  USBD_API_T g_usbApi = {
 };
 
 const  USBD_API_T *g_pUsbApi = &g_usbApi;
+#elif defined(lpc4337_m4)
+const USBD_API_T *g_pUsbApi;
+#endif
 
 /*****************************************************************************
  * Private functions
@@ -143,6 +147,11 @@ void cdcTask(void * p)
 
 	/* enable clocks and pinmux */
 	usb_pin_clk_init();
+
+#if defined(lpc4337_m4)
+	/* Init USB API structure */
+	g_pUsbApi = (const USBD_API_T *) LPC_ROM_API->usbdApiBase;
+#endif
 
 	/* initialize call back structures */
 	memset((void *) &usb_param, 0, sizeof(USBD_API_INIT_PARAM_T));

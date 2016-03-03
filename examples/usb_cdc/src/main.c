@@ -47,6 +47,10 @@
 
 /*==================[macros and definitions]=================================*/
 
+#if defined(lpc4337_m4)
+#define LPC_GPIO LPC_GPIO_PORT
+#endif
+
 /*==================[internal data declaration]==============================*/
 
 /*==================[internal functions declaration]=========================*/
@@ -79,12 +83,23 @@ static void initHardware(void)
     Board_Init();
     Board_LED_Set(0, false);
 
+    Chip_GPIO_SetPinDIROutput(LPC_GPIO, 2, 9);
+    Chip_GPIO_SetPinOutLow(LPC_GPIO, 2, 9);
+
+#if defined(lpc1769)
     Chip_GPIOINT_Init(LPC_GPIOINT);
     Chip_GPIOINT_SetIntFalling(LPC_GPIOINT, GPIOINT_PORT0, 1 << 18);
     NVIC_EnableIRQ(EINT3_IRQn);
+#elif defined(lpc4337_m4)
+    /* Set GPIO1[9] to IRQ Channel 0 */
+	Chip_SCU_GPIOIntPinSel(0, 1, 9);
 
-    Chip_GPIO_SetPinDIROutput(LPC_GPIO, 2, 9);
-    Chip_GPIO_SetPinOutLow(LPC_GPIO, 2, 9);
+	/* Falling edge IRQ */
+	Chip_PININT_SetPinModeEdge(LPC_GPIO_PIN_INT, PININTCH0);
+	Chip_PININT_EnableIntLow(LPC_GPIO_PIN_INT, PININTCH0);
+
+	NVIC_EnableIRQ(PIN_INT0_IRQn);
+#endif
 }
 
 /** @brief Tarea que destella el led del stick cada 500ms y prueba STDOUT
@@ -166,12 +181,24 @@ int main(void)
 }
 
 /** @brief interrupción externa del pulsador SW2 */
+#if defined(lpc1769)
 void EINT3_IRQHandler(void)
+#elif defined(lpc4337_m4)
+void PIN_INT0_IRQHandler(void)
+#else
+void foo_IRQHandler(void)
+#endif
 {
 	static portBASE_TYPE xSwitchRequired;
-
+#if defined(lpc1769)
 	if (Chip_GPIOINT_GetStatusFalling(LPC_GPIOINT, GPIOINT_PORT0) & (1<<18)) {
 		Chip_GPIOINT_ClearIntStatus(LPC_GPIOINT, GPIOINT_PORT0, 1<<18);
+#elif defined(lpc4337_m4)
+	if(Chip_PININT_GetFallStates(LPC_GPIO_PIN_INT) & PININTCH0) {
+		Chip_PININT_ClearIntStatus(LPC_GPIO_PIN_INT, PININTCH0);
+#else
+	if(1) {
+#endif
 		xSemaphoreGiveFromISR(sem, &xSwitchRequired);
 	}
 	portEND_SWITCHING_ISR(xSwitchRequired);
