@@ -3,6 +3,7 @@ This example is intended to be used with the EDU-CIAA-NXP board.
 
 ## Tutorial
 The bootloader waits for an image (.bin file) that will be copied to a RAM section. The first 4 bytes of the file must be the image size.
+
 1. Open a terminal application like GtkTerm.
 1. Open USB Serial Port from EDU-CIAA (typically /dev/ttyUSB1)
 1. Set variables in ```project.mk```:
