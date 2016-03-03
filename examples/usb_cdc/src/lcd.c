@@ -149,7 +149,11 @@ void LCD_Tim1Init(void)
 {
 	Chip_TIMER_Init(LPC_TIMER1);
 	Chip_TIMER_PrescaleSet(LPC_TIMER1,
-		Chip_Clock_GetPeripheralClockRate(SYSCTL_PCLK_TIMER1) / 1000000 - 1);
+#ifdef lpc1769
+         Chip_Clock_GetPeripheralClockRate(SYSCTL_PCLK_TIMER1) / 1000000 - 1);
+#else
+		 Chip_Clock_GetRate(CLK_MX_TIMER1) / 1000000 - 1);
+#endif
 	Chip_TIMER_MatchEnableInt(LPC_TIMER1, 0);
 	Chip_TIMER_ResetOnMatchEnable(LPC_TIMER1, 0);
 	Chip_TIMER_StopOnMatchDisable(LPC_TIMER1, 0);

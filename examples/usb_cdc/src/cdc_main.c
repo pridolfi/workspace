@@ -41,6 +41,12 @@
  * Private types/enumerations/variables
  ****************************************************************************/
 
+#if defined(lpc4337_m4)
+#define LPC_USB_BASE   LPC_USB0_BASE
+#define USB_IRQn       USB0_IRQn
+#define USB_IRQHandler USB0_IRQHandler
+#endif
+
 /*****************************************************************************
  * Public types/enumerations/variables
  ****************************************************************************/
@@ -72,10 +78,15 @@ const  USBD_API_T *g_pUsbApi = &g_usbApi;
 /* Initialize pin and clocks for USB0/USB1 port */
 static void usb_pin_clk_init(void)
 {
+#if defined(lpc1769)
 	/* enable USB PLL and clocks */
 	Chip_USB_Init();
 	/* enable USB 1 port on the board */
 	Board_USBD_Init(1);
+#elif defined(lpc4337)
+	/* enable USB PLL and clocks */
+	Chip_USB0_Init();
+#endif
 }
 
 /*****************************************************************************
