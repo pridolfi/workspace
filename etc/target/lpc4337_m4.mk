@@ -57,8 +57,13 @@ LFLAGS  := -nostdlib -fno-builtin -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 \
 			  -Wl,--gc-sections
 
 # Linker scripts
+ifndef LINK_RAM
 LD_FILE := -Tetc/ld/lpc4337_m4_lib.ld -Tetc/ld/lpc4337_m4_mem.ld \
            -Tetc/ld/lpc4337_m4.ld
+else
+LD_FILE := -Tetc/ld/lpc4337_m4_lib.ld -Tetc/ld/lpc4337_m4_mem.ld \
+           -Tetc/ld/lpc4337_m4_RAM.ld
+endif
 
 # OpenOCD configuration file
 CFG_FILE := etc/openocd/lpc4337.cfg
