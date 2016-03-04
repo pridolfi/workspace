@@ -31,9 +31,16 @@
  *
  */
 
-/** @brief This is a simple C example file.
- **
- **/
+/** @brief Blinky using FreeRTOS.
+ *
+ *
+ * NOTE: It's interesting to check behavior differences between standard and
+ * tickless mode. Set @ref configUSE_TICKLESS_IDLE to 1, increment a counter
+ * in @ref vApplicationTickHook and print the counter value every second
+ * inside a task. In standard mode the counter will have a value around 1000.
+ * In tickless mode, it will be around 25.
+ *
+ */
 
 /** \addtogroup rtos_blink FreeRTOS blink example
  ** @{ */
