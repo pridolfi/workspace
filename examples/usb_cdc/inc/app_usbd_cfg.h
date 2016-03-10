@@ -72,7 +72,12 @@ extern "C"
 #else
 #define USB_STACK_MEM_BASE      0x20000000
 #endif
+
+#if defined(lpc1769)
 #define USB_STACK_MEM_SIZE      0x0800
+#else
+#define USB_STACK_MEM_SIZE      0x00002000
+#endif
 
 /* USB descriptor arrays defined *_desc.c file */
 extern const uint8_t USB_DeviceDescriptor[];

@@ -40,6 +40,21 @@
  ****************************************************************************/
 
 /**
+ * USB Device Qualifier
+ */
+ALIGNED(4) const uint8_t USB_DeviceQualifier[] = {
+	USB_DEVICE_QUALI_SIZE,					/* bLength */
+	USB_DEVICE_QUALIFIER_DESCRIPTOR_TYPE,	/* bDescriptorType */
+	WBVAL(0x0200),							/* bcdUSB  2.00 */
+	0x00,									/* bDeviceClass */
+	0x00,									/* bDeviceSubClass */
+	0x00,									/* bDeviceProtocol */
+	USB_MAX_PACKET0,						/* bMaxPacketSize0 */
+	0x01,									/* bNumOtherSpeedConfigurations */
+	0x00									/* bReserved */
+};
+
+/**
  * USB Standard Device Descriptor
  */
 ALIGNED(4) const uint8_t USB_DeviceDescriptor[] = {

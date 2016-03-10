@@ -73,6 +73,8 @@ static const  USBD_API_T g_usbApi = {
 const  USBD_API_T *g_pUsbApi = &g_usbApi;
 #elif defined(lpc4337_m4)
 const USBD_API_T *g_pUsbApi;
+static uint32_t g_ep0RxBusy = 0;/* flag indicating whether EP0 OUT/RX buffer is busy. */
+static USB_EP_HANDLER_T g_Ep0BaseHdlr;	/* variable to store the pointer to base EP0 handler */
 #endif
 
 /*****************************************************************************
@@ -96,7 +98,31 @@ static void usb_pin_clk_init(void)
 /*****************************************************************************
  * Public functions
  ****************************************************************************/
+#if defined(lpc4337_m4)
+/* EP0_patch part of WORKAROUND for artf45032. */
+ErrorCode_t EP0_patch(USBD_HANDLE_T hUsb, void *data, uint32_t event)
+{
+	switch (event) {
+	case USB_EVT_OUT_NAK:
+		if (g_ep0RxBusy) {
+			/* we already queued the buffer so ignore this NAK event. */
+			return LPC_OK;
+		}
+		else {
+			/* Mark EP0_RX buffer as busy and allow base handler to queue the buffer. */
+			g_ep0RxBusy = 1;
+		}
+		break;
 
+	case USB_EVT_SETUP:	/* reset the flag when new setup sequence starts */
+	case USB_EVT_OUT:
+		/* we received the packet so clear the flag. */
+		g_ep0RxBusy = 0;
+		break;
+	}
+	return g_Ep0BaseHdlr(hUsb, data, event);
+}
+#endif
 /**
  * @brief	Handle interrupt from USB0
  * @return	Nothing
@@ -155,8 +181,13 @@ void cdcTask(void * p)
 
 	/* initialize call back structures */
 	memset((void *) &usb_param, 0, sizeof(USBD_API_INIT_PARAM_T));
+#if defined(lpc1769)
 	usb_param.usb_reg_base = LPC_USB_BASE + 0x200;
 	usb_param.max_num_ep = 3;
+#elif defined(lpc4337_m4)
+	usb_param.usb_reg_base = LPC_USB_BASE;
+	usb_param.max_num_ep = 4;
+#endif
 	usb_param.mem_base = USB_STACK_MEM_BASE;
 	usb_param.mem_size = USB_STACK_MEM_SIZE;
 
@@ -168,12 +199,29 @@ void cdcTask(void * p)
 	 */
 	desc.high_speed_desc = (uint8_t *) &USB_FsConfigDescriptor[0];
 	desc.full_speed_desc = (uint8_t *) &USB_FsConfigDescriptor[0];
+#if defined(lpc1769)
 	desc.device_qualifier = 0;
+#else
+	desc.device_qualifier = (uint8_t *) &USB_DeviceQualifier[0];
+#endif
 
 	/* USB Initialization */
 	ret = USBD_API->hw->Init(&g_hUsb, &desc, &usb_param);
 	if (ret == LPC_OK) {
+#if defined(lpc4337_m4)
+		/*	WORKAROUND for artf45032 ROM driver BUG:
+		    Due to a race condition there is the chance that a second NAK event will
+		    occur before the default endpoint0 handler has completed its preparation
+		    of the DMA engine for the first NAK event. This can cause certain fields
+		    in the DMA descriptors to be in an invalid state when the USB controller
+		    reads them, thereby causing a hang.
+		 */
+		USB_CORE_CTRL_T *pCtrl;
 
+		pCtrl = (USB_CORE_CTRL_T *) g_hUsb;	/* convert the handle to control structure */
+		g_Ep0BaseHdlr = pCtrl->ep_event_hdlr[0];/* retrieve the default EP0_OUT handler */
+		pCtrl->ep_event_hdlr[0] = EP0_patch;/* set our patch routine as EP0_OUT handler */
+#endif
 		/* Init VCOM interface */
 		ret = vcom_init(g_hUsb, &desc, &usb_param);
 		if (ret == LPC_OK) {
