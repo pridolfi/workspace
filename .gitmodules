@@ -1,0 +1,3 @@
+[submodule "modules/osek"]
+	path = modules/osek
+	url = https://pridolfi@github.com/pridolfi/firmware.modules.rtos.git
