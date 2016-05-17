@@ -61,7 +61,7 @@ LD_FILE := -Tetc/ld/lpc54102_m4_lib.ld \
            -Tetc/ld/lpc54102_m4.ld
 
 # OpenOCD configuration file
-CFG_FILE := etc/openocd/lpc54102.cfg
+CFG_FILE := etc/openocd/lpc54102_cd.cfg
 
 # Flash base address for OpenOCD download rule
 BASE_ADDR := 0x00000000
