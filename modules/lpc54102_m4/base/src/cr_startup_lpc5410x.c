@@ -478,9 +478,13 @@ void NMI_Handler(void)
 { while(1) {}
 }
 
+#include "chip.h"
+
 __attribute__ ((section(".after_vectors")))
 void HardFault_Handler(void)
-{ while(1) {}
+{ while(1) {
+	Chip_GPIO_SetPinToggle(LPC_GPIO, 0, 29);
+}
 }
 
 __attribute__ ((section(".after_vectors")))
