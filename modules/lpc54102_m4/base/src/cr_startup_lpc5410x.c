@@ -443,7 +443,8 @@ void ResetISR(void) {
         *pSCB_VTOR = (unsigned int) g_pfnVectors;
     }
 #endif
-#if defined (__USE_CMSIS) || defined (__USE_LPCOPEN)
+
+#if 0 /* defined (__USE_CMSIS) || defined (__USE_LPCOPEN) */
     SystemInit();
 #endif
 
@@ -478,13 +479,9 @@ void NMI_Handler(void)
 { while(1) {}
 }
 
-#include "chip.h"
-
 __attribute__ ((section(".after_vectors")))
 void HardFault_Handler(void)
-{ while(1) {
-	Chip_GPIO_SetPinToggle(LPC_GPIO, 0, 29);
-}
+{ while(1) {}
 }
 
 __attribute__ ((section(".after_vectors")))
