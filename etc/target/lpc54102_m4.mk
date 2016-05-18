@@ -36,7 +36,7 @@
 TARGET_NAME := lpc54102_m4
 
 # Default cross-toolchain
-CROSS_PREFIX ?= arm-none-eabi-
+#CROSS_PREFIX ?= arm-none-eabi-
 
 # variables de rutas o carpetas
 OUT_PATH = out/$(TARGET_NAME)
@@ -51,9 +51,13 @@ CFLAGS  := -Wall -ggdb3 -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 \
            -mfloat-abi=softfp -fdata-sections -ffunction-sections
 
 # Linking flags
-LFLAGS  := -nostdlib -fno-builtin -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 \
-           -mfloat-abi=softfp -Xlinker -Map=$(OUT_PATH)/$(PROJECT_NAME).map \
-			  -Wl,--gc-sections
+LFLAGS  := -nostdlib -static -Map=$(OUT_PATH)/$(APPLICATION).map --gc-sections
+
+# libs
+EXTERN_LIBS += gcc c m
+
+EXTERN_LIB_FOLDERS += /root/gcc-arm-none-eabi-4_9-2015q3/arm-none-eabi/lib/armv7-m
+EXTERN_LIB_FOLDERS += /root/gcc-arm-none-eabi-4_9-2015q3/lib/gcc/arm-none-eabi/4.9.3/armv7-m
 
 # Linker scripts
 LD_FILE := -Tetc/ld/lpc54102_m4_lib.ld \
