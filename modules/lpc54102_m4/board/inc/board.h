@@ -56,7 +56,7 @@ extern "C" {
     DEBUGIN macros. If not defined, DEBUG* functions will be optimized
     out of the code at build time.
  */
-#define DEBUG_ENABLE
+//#define DEBUG_ENABLE
 
 /** Define DEBUG_SEMIHOSTING along with DEBUG_ENABLE to enable IO support
     via semihosting. You may need to use a C library that supports
@@ -77,7 +77,7 @@ extern "C" {
 
 /** Main system clock rate in Hz for this board. Select a clock rate between
     1500000Hz and 150000000Hz for the main system (CPU) clock for this board. */
-#define BOARD_MAINCLOCKRATE     (100000000)
+#define BOARD_MAINCLOCKRATE     (96000000)
 
 /** External clock rate on the CLKIN pin in Hz for this board. If not used,
     set this to 0. Otherwise, set it to the exact rate in Hz this pin is
