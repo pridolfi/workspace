@@ -69,3 +69,6 @@ DOWNLOAD_CMD := openocd -f $(CFG_FILE) -c "init" -c "halt 0" -c "flash write_ima
 
 # Post-build command
 POST_BUILD_CMD += $(CROSS_PREFIX)objcopy --target elf32-littlearm --verbose --strip-all --remove-section=.ARM.attributes --redefine-sym __vectors_start__=__vectors_start___core_m0slave --keep-symbol __vectors_start___core_m0slave --redefine-sym _data=__start_data_core_m0slave --keep-symbol __start_data_core_m0slave --redefine-sym _edata=__end_data_core_m0slave --keep-symbol __end_data_core_m0slave --remove-section=".bss*" --remove-section=".noinit*" --rename-section .ARM.exidx=".core_m0slave.ARM.exidx" --rename-section .ARM.extab=".core_m0slave.ARM.extab" --rename-section .text=".core_m0slave" --rename-section .data=".core_m0slave.data" --rename-section .data_RAM2=".core_m0slave.data_RAM2" --rename-section .data_RAM3=".core_m0slave.data_RAM3" "$(OUT_PATH)/$(PROJECT_NAME).axf" "$(OUT_PATH)/$(PROJECT_NAME).axf.o"
+
+# Erase command
+ERASE_CMD := openocd -f $(CFG_FILE) -c "init" -c "reset halt" -c "flash erase_sector 0 0 last" -c "reset run" -c "shutdown"

@@ -116,7 +116,7 @@ download: $(PROJECT_NAME)
 
 erase:
 	@echo "Erasing flash memory..."
-	openocd -f $(CFG_FILE) -c "init" -c "halt 0" -c "flash erase_sector 0 0 last" -c "exit"
+	@$(ERASE_CMD)
 	@echo "Erase done."
 
 info:
