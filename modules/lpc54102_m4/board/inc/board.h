@@ -77,7 +77,7 @@ extern "C" {
 
 /** Main system clock rate in Hz for this board. Select a clock rate between
     1500000Hz and 150000000Hz for the main system (CPU) clock for this board. */
-#define BOARD_MAINCLOCKRATE     (36000000)
+#define BOARD_MAINCLOCKRATE     (96000000)
 
 /** External clock rate on the CLKIN pin in Hz for this board. If not used,
     set this to 0. Otherwise, set it to the exact rate in Hz this pin is
