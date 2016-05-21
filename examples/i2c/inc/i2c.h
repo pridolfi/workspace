@@ -31,8 +31,8 @@
  *
  */
 
-#ifndef _MAIN_H_
-#define _MAIN_H_
+#ifndef _I2C_H_
+#define _I2C_H_
 
 /** \addtogroup i2c I2C Example
  ** @{ */
@@ -66,4 +66,4 @@ int main(void);
 
 /** @} doxygen end group definition */
 /*==================[end of file]============================================*/
-#endif /* #ifndef _MAIN_H_ */
+#endif /* #ifndef _I2C_H_ */
