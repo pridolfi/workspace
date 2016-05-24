@@ -36,7 +36,7 @@
 TARGET_NAME := lpc54102_m0
 
 # Default cross-toolchain
-CROSS_PREFIX ?= arm-none-eabi-
+CROSS_PREFIX ?= 
 
 # variables de rutas o carpetas
 OUT_PATH = out/$(TARGET_NAME)
@@ -50,9 +50,13 @@ SYMBOLS += -DDEBUG -DCORE_M0PLUS -D__USE_LPCOPEN -D__LPC5410X__ -D__CODE_RED \
 CFLAGS  := -Wall -ggdb3 -mcpu=cortex-m0 -mthumb -fdata-sections -ffunction-sections -fmessage-length=0 -fno-builtin
 
 # Linking flags
-LFLAGS  := -nostdlib -fno-builtin -mcpu=cortex-m0 -mthumb \
-			  -Xlinker -Map=$(OUT_PATH)/$(PROY_NOMBRE).map \
-			  -Wl,--gc-sections
+LFLAGS  := -nostdlib -static -Map=$(OUT_PATH)/$(PROJECT_NAME).map --gc-sections
+
+# libs
+EXTERN_LIBS += gcc c m
+
+EXTERN_LIB_FOLDERS += /root/gcc-arm-none-eabi-4_9-2015q3/arm-none-eabi/lib/armv6-m
+EXTERN_LIB_FOLDERS += /root/gcc-arm-none-eabi-4_9-2015q3/lib/gcc/arm-none-eabi/4.9.3/armv6-m
 
 # Linker scripts
 LD_FILE := -Tetc/ld/lpc54102_m0_lib.ld -Tetc/ld/lpc54102_m0_mem.ld \

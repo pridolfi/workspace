@@ -51,7 +51,7 @@ CFLAGS  := -Wall -ggdb3 -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 \
            -mfloat-abi=softfp -fdata-sections -ffunction-sections
 
 # Linking flags
-LFLAGS  := -nostdlib -static -Map=$(OUT_PATH)/$(APPLICATION).map --gc-sections
+LFLAGS  := -nostdlib -static -Map=$(OUT_PATH)/$(PROJECT_NAME).map --gc-sections
 
 # libs
 EXTERN_LIBS += gcc c m
