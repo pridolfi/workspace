@@ -444,7 +444,7 @@ void ResetISR(void) {
     }
 #endif
 
-#if 0 /* defined (__USE_CMSIS) || defined (__USE_LPCOPEN) */
+#if defined (__USE_CMSIS) || defined (__USE_LPCOPEN)
     SystemInit();
 #endif
 

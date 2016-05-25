@@ -75,8 +75,8 @@ static uint32_t pausems_count;
 
 static void initHardware(void)
 {
-	Board_Init();
 	SystemCoreClockUpdate();
+	Board_Init();
 	SysTick_Config(SystemCoreClock / 1000);
 }
 
@@ -105,6 +105,7 @@ int main(void)
 
 	while (1)
 	{
+		DEBUGSTR("hello world!\r\n");
 		Board_LED_Toggle(LED);
 		pausems(DELAY_MS);
 	}
