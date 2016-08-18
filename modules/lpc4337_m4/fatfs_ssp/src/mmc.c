@@ -28,11 +28,11 @@
 #define CMD55	(0x40+55)	/* APP_CMD */
 #define CMD58	(0x40+58)	/* READ_OCR */
 
+#define BOOL 	bool
 
 /* Port Controls  (Platform dependent) */
-/* TODO: actualizar! */
-#define CS_LOW()    Chip_GPIO_SetPinOutLow(LPC_GPIO_PORT, 2, 2)
-#define CS_HIGH()   Chip_GPIO_SetPinOutHigh(LPC_GPIO_PORT, 2, 2)
+#define CS_LOW()    Chip_GPIO_SetPinOutLow(LPC_GPIO_PORT, 3, 0)
+#define CS_HIGH()   Chip_GPIO_SetPinOutHigh(LPC_GPIO_PORT, 3, 0)
 
 #define	FCLK_SLOW()					/* Set slow clock (100k-400k) */
 #define	FCLK_FAST()					/* Set fast clock (depends on the CSD) */
@@ -58,7 +58,9 @@ static void SSPSend(uint8_t *buf, uint32_t Length)
     Chip_SSP_DATA_SETUP_T xferConfig;
 
 	xferConfig.tx_data = buf;
+	xferConfig.tx_cnt  = 0;
 	xferConfig.rx_data = NULL;
+	xferConfig.rx_cnt  = 0;
 	xferConfig.length  = Length;
 
 	Chip_SSP_RWFrames_Blocking(LPC_SSP1, &xferConfig);
@@ -69,7 +71,9 @@ void SSPReceive( uint8_t *buf, uint32_t Length )
     Chip_SSP_DATA_SETUP_T xferConfig;
 
 	xferConfig.tx_data = NULL;
+	xferConfig.tx_cnt  = 0;
 	xferConfig.rx_data = buf;
+	xferConfig.rx_cnt  = 0;
 	xferConfig.length  = Length;
 
 	Chip_SSP_RWFrames_Blocking(LPC_SSP1, &xferConfig);
@@ -150,7 +154,7 @@ void deselect (void)
 /*-----------------------------------------------------------------------*/
 
 static
-BOOL select (void)	/* TRUE:Successful, FALSE:Timeout */
+BOOL select_ (void)	/* TRUE:Successful, FALSE:Timeout */
 {
 	CS_LOW();
 	if (wait_ready() != 0xFF) {
@@ -276,7 +280,7 @@ BYTE send_cmd (
 
 	/* Select the card and wait for ready */
 	deselect();
-	if (!select()) return 0xFF;
+	if (!select_()) return 0xFF;
 
 	/* Send command packet */
 	xmit_spi(cmd);						/* Start + Command index */
@@ -317,10 +321,6 @@ DSTATUS disk_initialize (
 )
 {
 	BYTE n, cmd, ty, ocr[4];
-
-	/* TODO: actualizar! */
-	Chip_GPIO_SetPinDIROutput(LPC_GPIO_PORT, 2, 2); /* CS */
-	Chip_GPIO_SetPinDIRInput(LPC_GPIO_PORT, 2, 11); /* Card Detect */
 
 	if (drv) return STA_NOINIT;			/* Supports only single drive */
 	if (Stat & STA_NODISK) return Stat;	/* No card in the socket */
@@ -389,7 +389,7 @@ DRESULT disk_read (
 	BYTE drv,			/* Physical drive nmuber (0) */
 	BYTE *buff,			/* Pointer to the data buffer to store read data */
 	DWORD sector,		/* Start sector number (LBA) */
-	BYTE count			/* Sector count (1..255) */
+	UINT count			/* Sector count (1..255) */
 )
 {
 	if (drv || !count) return RES_PARERR;
@@ -427,7 +427,7 @@ DRESULT disk_write (
 	BYTE drv,			/* Physical drive nmuber (0) */
 	const BYTE *buff,	/* Pointer to the data to be written */
 	DWORD sector,		/* Start sector number (LBA) */
-	BYTE count			/* Sector count (1..255) */
+	UINT count			/* Sector count (1..255) */
 )
 {
 	if (drv || !count) return RES_PARERR;
@@ -504,7 +504,7 @@ DRESULT disk_ioctl (
 
 		switch (ctrl) {
 		case CTRL_SYNC :		/* Make sure that no pending write process. Do not remove this or written sector might not left updated. */
-			if (select()) {
+			if (select_()) {
 				res = RES_OK;
 				deselect();
 			}
