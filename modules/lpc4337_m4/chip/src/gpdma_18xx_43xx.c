@@ -65,8 +65,8 @@ static const uint8_t GPDMA_LUTPerBurst[] = {
 	GPDMA_BSIZE_32,	/* I2S channel 1      */
 	GPDMA_BSIZE_4,	/* SSP1 Rx            */
 	GPDMA_BSIZE_4,	/* SSP1 Tx            */
-	GPDMA_BSIZE_4,	/* ADC 0              */
-	GPDMA_BSIZE_4,	/* ADC 1              */
+	GPDMA_BSIZE_1,	/* ADC 0, single DR   */
+	GPDMA_BSIZE_1,	/* ADC 1, single DR   */
 	GPDMA_BSIZE_1,	/* DAC                */
 	GPDMA_BSIZE_32,	/* I2S channel 0      */
 	GPDMA_BSIZE_32	/* I2S channel 0      */
@@ -133,8 +133,8 @@ volatile static const void *GPDMA_LUTPerAddr[] = {
 	(&LPC_I2S0->RXFIFO),			/* I2S0 Rx on channel 1  */
 	(&LPC_SSP1->DR),				/* SSP1 Rx            */
 	(&LPC_SSP1->DR),				/* SSP1 Tx            */
-	(&LPC_ADC0->GDR),				/* ADC 0              */
-	(&LPC_ADC1->GDR),				/* ADC 1              */
+	(&LPC_ADC0->DR[1]),			/* ADC 0 channel 1    */
+	(&LPC_ADC1->DR[1]),			/* ADC 1 channel 1    */
 	(&LPC_DAC->CR),					/* DAC                */
 	(&LPC_I2S1->TXFIFO),			/* I2S1 Tx on channel 0 */
 	(&LPC_I2S1->RXFIFO)				/* I2S1 Rx on channel 1 */
@@ -743,4 +743,3 @@ uint8_t Chip_GPDMA_GetFreeChannel(LPC_GPDMA_T *pGPDMA,
 	}
 	return 0;
 }
-
