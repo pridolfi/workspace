@@ -137,5 +137,5 @@ void Board_SystemInit(void)
 	   application and tools to clear memory and use scatter loading to
 	   external memory. */
 	Board_SetupMuxing();
-	Board_SetupClocking();
+	Chip_SetupXtalClocking();
 }
