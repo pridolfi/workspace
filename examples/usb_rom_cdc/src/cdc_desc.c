@@ -289,20 +289,20 @@ ALIGNED(4) const uint8_t USB_StringDescriptor[] = {
 	/* Index 0x01: Manufacturer */
 	(3 * 2 + 2),						/* bLength (13 Char + Type + length) */
 	USB_STRING_DESCRIPTOR_TYPE,			/* bDescriptorType */
+	'U', 0,
+	'T', 0,
 	'N', 0,
-	'X', 0,
-	'P', 0,
 	/* Index 0x02: Product */
 	(9 * 2 + 2),						/* bLength */
 	USB_STRING_DESCRIPTOR_TYPE,			/* bDescriptorType */
-	'V', 0,
-	'C', 0,
-	'O', 0,
-	'M', 0,
+	'T', 0,
+	'D', 0,
+	'I', 0,
+	'I', 0,
 	' ', 0,
-	'P', 0,
-	'o', 0,
-	'r', 0,
+	'T', 0,
+	'e', 0,
+	's', 0,
 	't', 0,
 	/* Index 0x03: Serial Number */
 	(6 * 2 + 2),						/* bLength (8 Char + Type + length) */
