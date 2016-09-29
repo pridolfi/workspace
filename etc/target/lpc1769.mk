@@ -53,7 +53,11 @@ LFLAGS  := -nostdlib -fno-builtin -mcpu=cortex-m3 -mthumb -Xlinker \
 			  -Map=$(OUT_PATH)/$(PROJECT_NAME).map -Wl,--gc-sections
 
 # Linker scripts
+ifdef USE_SEMIHOSTING
+LD_FILE := -Tetc/ld/lpc1769_semihost_lib.ld -Tetc/ld/lpc1769_mem.ld -Tetc/ld/lpc1769.ld
+else
 LD_FILE := -Tetc/ld/lpc1769_lib.ld -Tetc/ld/lpc1769_mem.ld -Tetc/ld/lpc1769.ld
+endif
 
 # OpenOCD configuration file
 CFG_FILE := etc/openocd/lpc1769.cfg
