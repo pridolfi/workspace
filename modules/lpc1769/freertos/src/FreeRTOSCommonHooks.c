@@ -35,6 +35,8 @@
 
 #include "chip.h"
 
+#define __WEAK__   __attribute__((weak))
+
 /*****************************************************************************
  * Private types/enumerations/variables
  ****************************************************************************/
@@ -69,7 +71,7 @@ void vApplicationMallocFailedHook(void)
 }
 
 /* FreeRTOS application idle hook */
-void vApplicationIdleHook(void)
+__WEAK__ void vApplicationIdleHook(void)
 {
 	/* Best to sleep here until next systick */
 	__WFI();
@@ -90,5 +92,5 @@ void vApplicationStackOverflowHook(xTaskHandle pxTask, signed char *pcTaskName)
 }
 
 /* FreeRTOS application tick hook */
-void vApplicationTickHook(void)
+__WEAK__ void vApplicationTickHook(void)
 {}
