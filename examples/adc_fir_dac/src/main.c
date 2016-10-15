@@ -4,7 +4,7 @@
 #include "bandpass.h"
 #include "fir_q31.h"
 
-#define FILTRO_PASA_BANDA			0
+#define FILTRO_PASA_BANDA			1
 #define FILTRO_PASA_BAJOS			(!FILTRO_PASA_BANDA)
 
 #define USAR_FUNCIONES_ASSEMBLER	1
@@ -43,8 +43,6 @@ int main(void)
 {
 	int i=0, offset;
 
-	initHardware();
-
 #if FILTRO_PASA_BANDA
 	fir_q31_init(&filtro, history, bandpass_taps, BANDPASS_TAP_NUM);
 	offset=500;
@@ -52,6 +50,8 @@ int main(void)
 	fir_q31_init(&filtro, history, lowpass_taps, LOWPASS_TAP_NUM);
 	offset=-100;
 #endif
+
+	initHardware();
 
 	*DWT_CTRL |= 1;
 
