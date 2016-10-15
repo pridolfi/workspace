@@ -69,3 +69,6 @@ DOWNLOAD_CMD := openocd -f $(CFG_FILE) -c "init" -c "halt 0" -c "flash write_ima
 
 # Post-build command
 POST_BUILD_CMD += 
+
+# Erase command
+ERASE_CMD := openocd -f $(CFG_FILE) -c "init" -c "halt 0" -c "flash erase_sector 0 0 last" -c "exit"

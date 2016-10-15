@@ -42,9 +42,16 @@
 /*==================[inclusions]=============================================*/
 
 #include "board.h"
-#include "main.h"
+#include "i2c.h"
 
 /*==================[macros and definitions]=================================*/
+
+/** i2c port used */
+#ifdef lpc4337_m4
+#define I2C_PORT I2C0
+#else
+#define I2C_PORT I2C1
+#endif
 
 /*==================[internal data declaration]==============================*/
 
@@ -71,9 +78,9 @@ static void initHardware(void)
    // Set the LED to the state of "Off"
    Board_LED_Set(0, false);
 
-   Board_I2C_Init(I2C1);
-   Chip_I2C_SetClockRate(I2C1, 100000);
-   Chip_I2C_SetMasterEventHandler(I2C1, Chip_I2C_EventHandlerPolling);
+   Board_I2C_Init(I2C_PORT);
+   Chip_I2C_SetClockRate(I2C_PORT, 100000);
+   Chip_I2C_SetMasterEventHandler(I2C_PORT, Chip_I2C_EventHandlerPolling);
 }
 
 /*==================[external functions definition]==========================*/
@@ -95,7 +102,7 @@ int main(void)
    xfer.txBuff = wbuf;
    xfer.txSz = 3;
 
-   Chip_I2C_MasterTransfer(I2C1, &xfer);
+   Chip_I2C_MasterTransfer(I2C_PORT, &xfer);
 
    //delay por software calculado con el teorema de los cinco dedos oscilantes
    for(i=0; i<0xFFFF; i++);
@@ -108,7 +115,7 @@ int main(void)
    xfer.txBuff = wbuf;
    xfer.txSz = 2;
 
-   Chip_I2C_MasterTransfer(I2C1, &xfer);
+   Chip_I2C_MasterTransfer(I2C_PORT, &xfer);
 
    //delay por software calculado con el teorema de los cinco dedos oscilantes
    for(i=0; i<0xFFFF; i++);

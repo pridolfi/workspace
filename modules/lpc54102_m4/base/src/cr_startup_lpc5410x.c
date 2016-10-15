@@ -443,6 +443,7 @@ void ResetISR(void) {
         *pSCB_VTOR = (unsigned int) g_pfnVectors;
     }
 #endif
+
 #if defined (__USE_CMSIS) || defined (__USE_LPCOPEN)
     SystemInit();
 #endif
