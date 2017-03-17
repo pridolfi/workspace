@@ -72,7 +72,6 @@ static void initHardware(void);
 static void initHardware(void)
 {
 	Board_Init();
-	Board_Buttons_Init();
 	SystemCoreClockUpdate();
 	SysTick_Config(SystemCoreClock / 1000);
 }
