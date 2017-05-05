@@ -47,6 +47,7 @@ typedef struct
 void ciaaIOInit(void);
 uint32_t ciaaWriteOutput(uint32_t outputNumber, uint32_t value);
 uint32_t ciaaReadInput(uint32_t inputNumber);
+uint32_t ciaaReadOutput(uint32_t outputNumber);
 void ciaaToggleOutput(uint32_t outputNumber);
 
 #endif /* CIAAIO_H_ */

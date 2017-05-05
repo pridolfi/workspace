@@ -114,6 +114,13 @@ uint32_t ciaaReadInput(uint32_t inputNumber)
 			inputs[inputNumber].bit);
 }
 
+uint32_t ciaaReadOutput(uint32_t outputNumber)
+{
+	return Chip_GPIO_ReadPortBit(LPC_GPIO_PORT,
+			outputs[outputNumber].port,
+			outputs[outputNumber].bit);
+}
+
 uint32_t ciaaWriteOutput(uint32_t outputNumber, uint32_t value)
 {
 	Chip_GPIO_SetPinState(LPC_GPIO_PORT,
