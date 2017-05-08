@@ -91,6 +91,7 @@ extern "C" {
  * Button defines
  */
 #define BUTTONS_BUTTON1     0x01
+#define BUTTONS_BUTTON2		0x02
 #define NO_BUTTON_PRESSED   0x00
 
 /**

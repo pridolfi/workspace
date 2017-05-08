@@ -37,8 +37,10 @@
 /*****************************************************************************
  * Private types/enumerations/variables
  ****************************************************************************/
-#define BUTTONS_BUTTON1_GPIO_PORT_NUM           2
-#define BUTTONS_BUTTON1_GPIO_BIT_NUM            10
+#define BUTTONS_BUTTON1_GPIO_PORT_NUM           0
+#define BUTTONS_BUTTON1_GPIO_BIT_NUM            18
+#define BUTTONS_BUTTON2_GPIO_PORT_NUM           0
+#define BUTTONS_BUTTON2_GPIO_BIT_NUM            1
 #define JOYSTICK_UP_GPIO_PORT_NUM               2
 #define JOYSTICK_UP_GPIO_BIT_NUM                3
 #define JOYSTICK_DOWN_GPIO_PORT_NUM             0
@@ -51,6 +53,17 @@
 #define JOYSTICK_PRESS_GPIO_BIT_NUM             17
 #define LED0_GPIO_PORT_NUM                      0
 #define LED0_GPIO_BIT_NUM                       22
+#define LED1_GPIO_PORT_NUM                      2
+#define LED1_GPIO_BIT_NUM                       2
+#define LED2_GPIO_PORT_NUM                      2
+#define LED2_GPIO_BIT_NUM                       3
+#define LED3_GPIO_PORT_NUM                      2
+#define LED3_GPIO_BIT_NUM                       4
+
+#define BOARD_LEDs_NUM 4
+
+uint8_t Board_LED_Ports[] = {LED0_GPIO_PORT_NUM, LED1_GPIO_PORT_NUM, LED2_GPIO_PORT_NUM, LED3_GPIO_PORT_NUM};
+uint8_t Board_LED_Bits[] =  {LED0_GPIO_BIT_NUM,  LED1_GPIO_BIT_NUM,  LED2_GPIO_BIT_NUM,  LED3_GPIO_BIT_NUM};
 
 /*****************************************************************************
  * Public types/enumerations/variables
@@ -70,6 +83,9 @@ static void Board_LED_Init(void)
 	/* Pin PIO0_22 is configured as GPIO pin during SystemInit */
 	/* Set the PIO_22 as output */
 	Chip_GPIO_WriteDirBit(LPC_GPIO, LED0_GPIO_PORT_NUM, LED0_GPIO_BIT_NUM, true);
+	Chip_GPIO_WriteDirBit(LPC_GPIO, LED1_GPIO_PORT_NUM, LED1_GPIO_BIT_NUM, true);
+	Chip_GPIO_WriteDirBit(LPC_GPIO, LED2_GPIO_PORT_NUM, LED2_GPIO_BIT_NUM, true);
+	Chip_GPIO_WriteDirBit(LPC_GPIO, LED3_GPIO_PORT_NUM, LED3_GPIO_BIT_NUM, true);
 }
 
 /*****************************************************************************
@@ -130,9 +146,8 @@ void Board_UARTPutSTR(char *str)
 /* Sets the state of a board LED to on or off */
 void Board_LED_Set(uint8_t LEDNumber, bool On)
 {
-	/* There is only one LED */
-	if (LEDNumber == 0) {
-		Chip_GPIO_WritePortBit(LPC_GPIO, LED0_GPIO_PORT_NUM, LED0_GPIO_BIT_NUM, On);
+	if (LEDNumber < BOARD_LEDs_NUM) {
+		Chip_GPIO_WritePortBit(LPC_GPIO, Board_LED_Ports[LEDNumber], Board_LED_Bits[LEDNumber], On);
 	}
 }
 
@@ -141,18 +156,14 @@ bool Board_LED_Test(uint8_t LEDNumber)
 {
 	bool state = false;
 
-	if (LEDNumber == 0) {
-		state = Chip_GPIO_ReadPortBit(LPC_GPIO, LED0_GPIO_PORT_NUM, LED0_GPIO_BIT_NUM);
-	}
+	state = Chip_GPIO_ReadPortBit(LPC_GPIO, Board_LED_Ports[LEDNumber], Board_LED_Bits[LEDNumber]);
 
 	return state;
 }
 
 void Board_LED_Toggle(uint8_t LEDNumber)
 {
-	if (LEDNumber == 0) {
-		Board_LED_Set(LEDNumber, !Board_LED_Test(LEDNumber));
-	}
+	Board_LED_Set(LEDNumber, !Board_LED_Test(LEDNumber));
 }
 
 /* Set up and initialize all required blocks and functions related to the
@@ -294,6 +305,7 @@ void Board_I2C_Init(I2C_ID_T id)
 void Board_Buttons_Init(void)
 {
 	Chip_GPIO_WriteDirBit(LPC_GPIO, BUTTONS_BUTTON1_GPIO_PORT_NUM, BUTTONS_BUTTON1_GPIO_BIT_NUM, false);
+	Chip_GPIO_WriteDirBit(LPC_GPIO, BUTTONS_BUTTON2_GPIO_PORT_NUM, BUTTONS_BUTTON2_GPIO_BIT_NUM, false);
 }
 
 uint32_t Buttons_GetStatus(void)
@@ -301,6 +313,9 @@ uint32_t Buttons_GetStatus(void)
 	uint8_t ret = NO_BUTTON_PRESSED;
 	if (Chip_GPIO_ReadPortBit(LPC_GPIO, BUTTONS_BUTTON1_GPIO_PORT_NUM, BUTTONS_BUTTON1_GPIO_BIT_NUM) == 0x00) {
 		ret |= BUTTONS_BUTTON1;
+	}
+	if (Chip_GPIO_ReadPortBit(LPC_GPIO, BUTTONS_BUTTON2_GPIO_PORT_NUM, BUTTONS_BUTTON2_GPIO_BIT_NUM) == 0x00) {
+		ret |= BUTTONS_BUTTON2;
 	}
 	return ret;
 }
