@@ -156,14 +156,18 @@ bool Board_LED_Test(uint8_t LEDNumber)
 {
 	bool state = false;
 
-	state = Chip_GPIO_ReadPortBit(LPC_GPIO, Board_LED_Ports[LEDNumber], Board_LED_Bits[LEDNumber]);
+	if (LEDNumber < BOARD_LEDs_NUM) {
+		state = Chip_GPIO_ReadPortBit(LPC_GPIO, Board_LED_Ports[LEDNumber], Board_LED_Bits[LEDNumber]);
+	}
 
 	return state;
 }
 
 void Board_LED_Toggle(uint8_t LEDNumber)
 {
-	Board_LED_Set(LEDNumber, !Board_LED_Test(LEDNumber));
+	if (LEDNumber < BOARD_LEDs_NUM) {
+		Board_LED_Set(LEDNumber, !Board_LED_Test(LEDNumber));
+	}
 }
 
 /* Set up and initialize all required blocks and functions related to the
