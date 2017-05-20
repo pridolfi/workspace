@@ -9,7 +9,7 @@ and the SSP API functions provided by the
 [LPCOpen Platform](https://www.lpcware.com/lpcopen).
 
 The minimum setup to communicate to an SD card via SPI interface is:
-![](http://elm-chan.org/docs/mmc/gfx1/spicon.png)
+![](http://elm-chan.org/docs/mmc/pic/spicon.png)
 
 Where:
 

@@ -93,7 +93,7 @@ int main(void)
    I2C_XFER_T xfer;
 
    initHardware();
-
+#if 0
    /* Transferencia de escritura (escribo addr y datos, ojo, tamaño de página 32 bytes) */
    xfer.rxBuff = 0;
    xfer.rxSz = 0;
@@ -105,8 +105,8 @@ int main(void)
    Chip_I2C_MasterTransfer(I2C_PORT, &xfer);
 
    //delay por software calculado con el teorema de los cinco dedos oscilantes
-   for(i=0; i<0xFFFF; i++);
-
+   for(i=0; i<0xFFFFF; i++);
+#endif
    /* Transferencia de lectura (escribo addr, leo datos) */
    xfer.rxBuff = rbuf;
    xfer.rxSz = 1;
@@ -118,7 +118,7 @@ int main(void)
    Chip_I2C_MasterTransfer(I2C_PORT, &xfer);
 
    //delay por software calculado con el teorema de los cinco dedos oscilantes
-   for(i=0; i<0xFFFF; i++);
+   for(i=0; i<0xFFFFF; i++);
 
    while(1);
 }
