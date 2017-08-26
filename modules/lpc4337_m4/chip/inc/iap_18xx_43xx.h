@@ -82,6 +82,12 @@ extern "C" {
 typedef void (*IAP_ENTRY_T)(unsigned int[5], unsigned int[4]);
 
 /**
+ * @brief	Initialize IAP
+ * @return	Status code to indicate the command is executed successfully or not
+ */
+uint8_t Chip_IAP_Init(void);
+
+/**
  * @brief	Prepare sector for write operation
  * @param	strSector	: Start sector number
  * @param	endSector	: End sector number
@@ -159,9 +165,10 @@ uint8_t Chip_IAP_ReinvokeISP(void);
 
 /**
  * @brief	Read the unique ID
+ * @param   uid[]    : Array of uint32_t with 4 elements to return the UID 
  * @return	Status code to indicate the command is executed successfully or not
  */
-uint32_t Chip_IAP_ReadUID(void);
+uint32_t Chip_IAP_ReadUID(uint32_t uid[]);
 
 /**
  * @brief	Erase a page or multiple papers of on-chip flash memory
@@ -187,6 +194,13 @@ uint8_t Chip_IAP_ErasePage(uint32_t strPage, uint32_t endPage);
 uint8_t Chip_IAP_SetBootFlashBank(uint8_t bankNum);
 
 /**
+ * @brief	Initialize the IAP command interface
+ * @return	IAP_CMD_SUCCESS on success
+ * @note	On parts with flash this API must be called before using IAP interface
+ */
+uint8_t Chip_IAP_init(void);
+
+/**
  * @}
  */
 
@@ -195,3 +209,9 @@ uint8_t Chip_IAP_SetBootFlashBank(uint8_t bankNum);
 #endif
 
 #endif /* __IAP_H_ */
+
+
+
+
+
+

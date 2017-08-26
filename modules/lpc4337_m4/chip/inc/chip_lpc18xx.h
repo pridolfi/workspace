@@ -109,6 +109,7 @@ extern "C" {
 
 #define LPC_SCT                   ((LPC_SCT_T              *) LPC_SCT_BASE)
 #define LPC_GPDMA                 ((LPC_GPDMA_T            *) LPC_GPDMA_BASE)
+#define LPC_SPIFI                 ((LPC_SPIFI_T            *) LPC_SPIFI_BASE)
 #define LPC_SDMMC                 ((LPC_SDMMC_T            *) LPC_SDMMC_BASE)
 #define LPC_EMC                   ((LPC_EMC_T              *) LPC_EMC_BASE)
 #define LPC_USB0                  ((LPC_USBHS_T            *) LPC_USB0_BASE)
@@ -155,7 +156,6 @@ extern "C" {
 #define LPC_GPIO_PORT             ((LPC_GPIO_T             *) LPC_GPIO_PORT_BASE)
 #define LPC_EEPROM                ((LPC_EEPROM_T           *) LPC_EEPROM_BASE)
 #define LPC_FMCA                  ((LPC_FMC_T              *) LPC_FMCA_BASE)
-#define LPC_FMC                   ((LPC_FMC_T            * *) LPC_FMCA_BASE)
 #define LPC_FMCB                  ((LPC_FMC_T              *) LPC_FMCB_BASE)
 #define LPC_ROM_API               ((LPC_ROM_API_T          *) LPC_ROM_API_BASE)
 
@@ -195,6 +195,8 @@ extern "C" {
 #include "sct_18xx_43xx.h"
 #include "sct_pwm_18xx_43xx.h"
 #include "sdmmc_18xx_43xx.h"
+#include "sdio_18xx_43xx.h"
+#include "spifi_18xx_43xx.h"
 #include "ssp_18xx_43xx.h"
 #include "timer_18xx_43xx.h"
 #include "uart_18xx_43xx.h"
@@ -208,3 +210,9 @@ extern "C" {
 #endif
 
 #endif /* __CHIP_LPC18XX_H_ */
+
+
+
+
+
+

@@ -64,6 +64,20 @@ typedef struct {		/*!< FMC Structure */
 #define FMC_FLASHSIG_STAT       (1 << 2)
 
 /**
+ * @brief	Gets the base address of given bank
+ * @param	0 - Bank 0; 1 - Bank 1
+ * @return	Base address corresponding to given bank
+ */
+__STATIC_INLINE LPC_FMC_T * Chip_FMC_BaseAddr(uint8_t bank)
+{
+	if (!bank) {
+		return LPC_FMCA;
+	} else {
+		return LPC_FMCB;
+	}
+}
+
+/**
  * @brief	Start computation of a signature for a FLASH memory range
  * @param	bank	: FLASH bank, A = 0, B = 1
  * @param	start	: Starting FLASH address for computation, must be aligned on 16 byte boundary
@@ -76,9 +90,10 @@ typedef struct {		/*!< FMC Structure */
  */
 STATIC INLINE void Chip_FMC_ComputeSignature(uint8_t bank, uint32_t start, uint32_t stop)
 {
-	LPC_FMC[bank]->FMSSTART = (start >> 4);
-	LPC_FMC[bank]->FMSTATCLR = FMC_FLASHSIG_STAT;
-	LPC_FMC[bank]->FMSSTOP = (stop >> 4) | FMC_FLASHSIG_BUSY;
+	LPC_FMC_T *LPC_FMC = Chip_FMC_BaseAddr(bank);
+	LPC_FMC->FMSSTART = (start >> 4);
+	LPC_FMC->FMSTATCLR = FMC_FLASHSIG_STAT;
+	LPC_FMC->FMSSTOP = (stop >> 4) | FMC_FLASHSIG_BUSY;
 }
 
 /**
@@ -104,7 +119,7 @@ STATIC INLINE void Chip_FMC_ComputeSignatureBlocks(uint8_t bank, uint32_t start,
  */
 STATIC INLINE void Chip_FMC_ClearSignatureBusy(uint8_t bank)
 {
-	LPC_FMC[bank]->FMSTATCLR = FMC_FLASHSIG_STAT;
+	Chip_FMC_BaseAddr(bank)->FMSTATCLR = FMC_FLASHSIG_STAT;
 }
 
 /**
@@ -114,7 +129,7 @@ STATIC INLINE void Chip_FMC_ClearSignatureBusy(uint8_t bank)
  */
 STATIC INLINE bool Chip_FMC_IsSignatureBusy(uint8_t bank)
 {
-	return (bool) ((LPC_FMC[bank]->FMSTAT & FMC_FLASHSIG_STAT) == 0);
+	return (bool) ((Chip_FMC_BaseAddr(bank)->FMSTAT & FMC_FLASHSIG_STAT) == 0);
 }
 
 /**
@@ -125,7 +140,7 @@ STATIC INLINE bool Chip_FMC_IsSignatureBusy(uint8_t bank)
  */
 STATIC INLINE uint32_t Chip_FMC_GetSignature(uint8_t bank, int index)
 {
-	return LPC_FMC[bank]->FMSW[index];
+	return Chip_FMC_BaseAddr(bank)->FMSW[index];
 }
 
 /**
@@ -137,3 +152,9 @@ STATIC INLINE uint32_t Chip_FMC_GetSignature(uint8_t bank, int index)
 #endif
 
 #endif /* __FMC_18XX_43XX_H_ */
+
+
+
+
+
+

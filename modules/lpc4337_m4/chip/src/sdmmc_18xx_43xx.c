@@ -182,7 +182,7 @@ static void prv_process_csd(LPC_SDMMC_T *pSDMMC)
 
 	if ((g_card_info->card_info.card_type & CARD_TYPE_HC) && (g_card_info->card_info.card_type & CARD_TYPE_SD)) {
 		/* See section 5.3.3 CSD Register (CSD Version 2.0) of SD2.0 spec  an explanation for the calculation of these values */
-		c_size = prv_get_bits(48, 63, (uint32_t *) g_card_info->card_info.csd) + 1;
+		c_size = prv_get_bits(48, 69, (uint32_t *) g_card_info->card_info.csd) + 1;
 		g_card_info->card_info.blocknr = c_size << 10;	/* 512 byte blocks */
 	}
 	else {
@@ -590,3 +590,9 @@ int32_t Chip_SDMMC_WriteBlocks(LPC_SDMMC_T *pSDMMC, void *buffer, int32_t start_
 
 	return cbWrote;
 }
+
+
+
+
+
+

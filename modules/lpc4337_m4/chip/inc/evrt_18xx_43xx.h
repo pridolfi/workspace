@@ -79,7 +79,9 @@ typedef enum CHIP_EVRT_SRC {
 	EVRT_SRC_COMBINE_TIMER14,	/*!< Combined timer 14 event router source	*/
 	EVRT_SRC_RESERVED1,			/*!< Reserved                           */
 	EVRT_SRC_RESERVED2,			/*!< Reserved							*/
-	EVRT_SRC_RESET				/*!< Reset event router source			*/
+	EVRT_SRC_RESET,				/*!< Reset event router source			*/
+    EVRT_SRC_BOD_RESET,			/*!< Reset event router source			*/
+    EVRT_SRC_DEEP_POWER_DOWN    /*!< Reset event router source			*/
 } CHIP_EVRT_SRC_T;
 
 /**
@@ -93,7 +95,7 @@ typedef enum CHIP_EVRT_SRC {
 								 || (n == EVRT_SRC_USB1) || (n == EVRT_SRC_CCAN) || (n == EVRT_SRC_SDIO) \
 								 || (n == EVRT_SRC_COMBINE_TIMER2) || (n == EVRT_SRC_COMBINE_TIMER6) \
 								 || (n == EVRT_SRC_QEI) || (n == EVRT_SRC_COMBINE_TIMER14) \
-								 || (n == EVRT_SRC_RESET)) \
+								 || (n == EVRT_SRC_RESET) || (n == EVRT_SRC_BOD_RESET) || (n == EVRT_SRC_DEEP_POWER_DOWN)) \
 
 /**
  * @brief EVRT input state detecting type
@@ -169,3 +171,9 @@ STATIC INLINE void Chip_EVRT_ClrPendIntSrc(CHIP_EVRT_SRC_T EVRT_Src)
 #endif
 
 #endif /* __EVRT_18XX_43XX_H_ */
+
+
+
+
+
+

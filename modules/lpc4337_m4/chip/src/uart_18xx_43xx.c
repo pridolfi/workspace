@@ -211,7 +211,7 @@ int Chip_UART_ReadBlocking(LPC_USART_T *pUART, void *data, int numBytes)
 	int pass, readBytes = 0;
 	uint8_t *p8 = (uint8_t *) data;
 
-	while (readBytes < numBytes) {
+	while (numBytes > 0) {
 		pass = Chip_UART_Read(pUART, p8, numBytes);
 		numBytes -= pass;
 		readBytes += pass;
@@ -240,7 +240,7 @@ uint32_t Chip_UART_SetBaud(LPC_USART_T *pUART, uint32_t baudrate)
 
 	/* Fractional FDR alreadt setup for 1 in UART init */
 
-	return clkin / div;
+	return (clkin / div) >> 4;
 }
 
 /* UART receive-only interrupt handler for ring buffers */
@@ -421,4 +421,10 @@ void Chip_UART_ABCmd(LPC_USART_T *pUART, uint32_t mode, bool autorestart, Functi
 		pUART->ACR = 0;
 	}
 }
+
+
+
+
+
+
 

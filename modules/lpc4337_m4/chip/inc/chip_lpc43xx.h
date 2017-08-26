@@ -67,6 +67,7 @@ extern "C" {
 #define LPC_PMC_BASE              0x40042000
 #define LPC_CREG_BASE             0x40043000
 #define LPC_EVRT_BASE             0x40044000
+#define LPC_OTP_BASE              0x40045000
 #define LPC_RTC_BASE              0x40046000
 #define LPC_CGU_BASE              0x40050000
 #define LPC_CCU1_BASE             0x40051000
@@ -109,6 +110,7 @@ extern "C" {
 
 #define LPC_SCT                   ((LPC_SCT_T              *) LPC_SCT_BASE)
 #define LPC_GPDMA                 ((LPC_GPDMA_T            *) LPC_GPDMA_BASE)
+#define LPC_SPIFI                 ((LPC_SPIFI_T            *) LPC_SPIFI_BASE)
 #define LPC_SDMMC                 ((LPC_SDMMC_T            *) LPC_SDMMC_BASE)
 #define LPC_EMC                   ((LPC_EMC_T              *) LPC_EMC_BASE)
 #define LPC_USB0                  ((LPC_USBHS_T            *) LPC_USB0_BASE)
@@ -158,7 +160,6 @@ extern "C" {
 #define LPC_SGPIO                 ((LPC_SGPIO_T            *) LPC_SGPIO_BASE)
 #define LPC_EEPROM                ((LPC_EEPROM_T           *) LPC_EEPROM_BASE)
 #define LPC_FMCA                  ((LPC_FMC_T              *) LPC_FMCA_BASE)
-#define LPC_FMC                   ((LPC_FMC_T            * *) LPC_FMCA_BASE)
 #define LPC_FMCB                  ((LPC_FMC_T              *) LPC_FMCB_BASE)
 #define LPC_ROM_API               ((LPC_ROM_API_T          *) LPC_ROM_API_BASE)
 
@@ -201,6 +202,7 @@ extern "C" {
 #include "sdmmc_18xx_43xx.h"
 #include "sdio_18xx_43xx.h"
 #include "sgpio_18xx_43xx.h"
+#include "spifi_18xx_43xx.h"
 #include "spi_18xx_43xx.h"
 #include "ssp_18xx_43xx.h"
 #include "timer_18xx_43xx.h"
@@ -219,3 +221,9 @@ extern "C" {
 #endif
 
 #endif /* __CHIP_LPC43XX_H_ */
+
+
+
+
+
+

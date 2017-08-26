@@ -129,7 +129,7 @@ uint32_t Chip_OTP_ProgKey(uint32_t KeyNum, uint8_t *key);
 
 /**
  * @brief	Generate Random Number using HW Random Number Generator
- * @return	Random Number value
+ * @return	Error code of the random number generation. To load the random number into AES, call Chip_AES_LoadKeyRNG
  */
 uint32_t Chip_OTP_GenRand(void);
 
@@ -142,3 +142,9 @@ uint32_t Chip_OTP_GenRand(void);
 #endif
 
 #endif /* __OTP_18XX_43XX_H_ */
+
+
+
+
+
+

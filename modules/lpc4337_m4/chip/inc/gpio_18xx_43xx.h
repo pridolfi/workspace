@@ -134,7 +134,15 @@ STATIC INLINE bool Chip_GPIO_GetPinState(LPC_GPIO_T *pGPIO, uint8_t port, uint8_
  * Chip_GPIO_SetPinDIRInput() or Chip_GPIO_SetPinDIR() functions instead
  * of this function.
  */
-void Chip_GPIO_WriteDirBit(LPC_GPIO_T *pGPIO, uint32_t port, uint8_t bit, bool setting);
+STATIC INLINE void Chip_GPIO_WriteDirBit(LPC_GPIO_T *pGPIO, uint32_t port, uint8_t bit, bool setting)
+{
+	if (setting) {
+		pGPIO->DIR[port] |= 1UL << bit;
+	}
+	else {
+		pGPIO->DIR[port] &= ~(1UL << bit);
+	}
+}
 
 /**
  * @brief	Set GPIO direction for a single GPIO pin to an output
@@ -168,7 +176,15 @@ STATIC INLINE void Chip_GPIO_SetPinDIRInput(LPC_GPIO_T *pGPIO, uint8_t port, uin
  * @param	output	: true for output, false for input
  * @return	Nothing
  */
-void Chip_GPIO_SetPinDIR(LPC_GPIO_T *pGPIO, uint8_t port, uint8_t pin, bool output);
+STATIC INLINE void Chip_GPIO_SetPinDIR(LPC_GPIO_T *pGPIO, uint8_t port, uint8_t pin, bool output)
+{
+	if (output) {
+		Chip_GPIO_SetPinDIROutput(pGPIO, port, pin);
+	}
+	else {
+		Chip_GPIO_SetPinDIRInput(pGPIO, port, pin);
+	}
+}
 
 /**
  * @brief	Read a GPIO direction (out or in)
@@ -205,7 +221,15 @@ STATIC INLINE bool Chip_GPIO_GetPinDIR(LPC_GPIO_T *pGPIO, uint8_t port, uint8_t 
  * @note	Bits set to '0' are not altered. It is recommended to use the
  * Chip_GPIO_SetPortDIR() function instead.
  */
-void Chip_GPIO_SetDir(LPC_GPIO_T *pGPIO, uint8_t portNum, uint32_t bitValue, uint8_t out);
+STATIC INLINE void Chip_GPIO_SetDir(LPC_GPIO_T *pGPIO, uint8_t portNum, uint32_t bitValue, uint8_t out)
+{
+	if (out) {
+		pGPIO->DIR[portNum] |= bitValue;
+	}
+	else {
+		pGPIO->DIR[portNum] &= ~bitValue;
+	}
+}
 
 /**
  * @brief	Set GPIO direction for a all selected GPIO pins to an output
@@ -245,7 +269,15 @@ STATIC INLINE void Chip_GPIO_SetPortDIRInput(LPC_GPIO_T *pGPIO, uint8_t port, ui
  * @note	Sets multiple GPIO pins to the input direction, each bit's position that is
  * high sets the corresponding pin number for that bit to an input.
  */
-void Chip_GPIO_SetPortDIR(LPC_GPIO_T *pGPIO, uint8_t port, uint8_t pinMask, bool outSet);
+STATIC INLINE void Chip_GPIO_SetPortDIR(LPC_GPIO_T *pGPIO, uint8_t port, uint32_t pinMask, bool outSet)
+{
+	if (outSet) {
+		Chip_GPIO_SetPortDIROutput(pGPIO, port, pinMask);
+	}
+	else {
+		Chip_GPIO_SetPortDIRInput(pGPIO, port, pinMask);
+	}
+}
 
 /**
  * @brief	Get GPIO direction for a all GPIO pins
@@ -469,3 +501,9 @@ STATIC INLINE uint32_t Chip_GPIO_ReadValue(LPC_GPIO_T *pGPIO, uint8_t portNum)
 #endif
 
 #endif /* __GPIO_18XX_43XX_H_ */
+
+
+
+
+
+
