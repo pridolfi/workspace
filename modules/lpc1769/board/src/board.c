@@ -206,9 +206,13 @@ void Board_SSP_Init(LPC_SSP_T *pSSP)
 		 * P0.9: MOSI
 		 */
 		Chip_IOCON_PinMux(LPC_IOCON, 0, 7, IOCON_MODE_INACT, IOCON_FUNC2);
-		Chip_IOCON_PinMux(LPC_IOCON, 0, 6, IOCON_MODE_INACT, IOCON_FUNC2);
+		/*Chip_IOCON_PinMux(LPC_IOCON, 0, 6, IOCON_MODE_INACT, IOCON_FUNC2);*/
 		Chip_IOCON_PinMux(LPC_IOCON, 0, 8, IOCON_MODE_INACT, IOCON_FUNC2);
 		Chip_IOCON_PinMux(LPC_IOCON, 0, 9, IOCON_MODE_INACT, IOCON_FUNC2);
+
+		/* P0.6 SSEL used as GPIO */
+		Chip_IOCON_PinMux(LPC_IOCON, 0, 6, IOCON_MODE_PULLUP, IOCON_FUNC0);
+		Chip_GPIO_SetPinDIROutput(LPC_GPIO, 0, 6);
 	}
 	else {
 		/* Set up clock and muxing for SSP0 interface */
