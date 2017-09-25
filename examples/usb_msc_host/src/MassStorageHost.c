@@ -87,6 +87,8 @@ static void SetupHardware(void)
 	} else {
 		Chip_USB1_Init();
 	}
+#else
+	Chip_USB_Init();
 #endif
 	USB_Init(FlashDisk_MS_Interface.Config.PortNumber, USB_MODE_Host);
 	/* Hardware Initialization */

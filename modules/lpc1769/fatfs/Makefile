@@ -28,45 +28,11 @@
 # CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
-################################################################################
-#                Target Makefile for LPC1769 microcontroller                   #
-################################################################################
 
-# Target name
-TARGET_NAME := lpc1769
+fatfs_PATH := modules/lpc1769/fatfs
 
-OUT_PATH := out/$(TARGET_NAME)
-OBJ_PATH := $(OUT_PATH)/obj
+fatfs_SRC_FILES += $(wildcard $(fatfs_PATH)/src/*.c)
 
-# Default cross-toolchain
-CROSS_PREFIX ?= arm-none-eabi-
+fatfs_SRC_FOLDERS += modules/lpc1769/fatfs/src
 
-# Defined symbols
-SYMBOLS := -DDEBUG -DCORE_M3 -D__USE_LPCOPEN -D__LPC17XX__ -D__LPC175X_6X__ -D__CODE_RED
-
-# Compilation flags
-CFLAGS  := -Wall -ggdb3 -mcpu=cortex-m3 -mthumb -fdata-sections \
-           -ffunction-sections -c
-
-# Linking flags
-LFLAGS  := -nostdlib -fno-builtin -mcpu=cortex-m3 -mthumb -Xlinker \
-			  -Map=$(OUT_PATH)/$(PROJECT_NAME).map -Wl,--gc-sections
-
-# Linker scripts
-ifdef USE_SEMIHOSTING
-LD_FILE := -Tetc/ld/lpc1769_semihost_lib.ld -Tetc/ld/lpc1769_mem.ld -Tetc/ld/lpc1769.ld
-else
-LD_FILE := -Tetc/ld/lpc1769_lib.ld -Tetc/ld/lpc1769_mem.ld -Tetc/ld/lpc1769.ld
-endif
-
-# OpenOCD configuration file
-CFG_FILE := etc/openocd/lpc1769.cfg
-
-# Flash base address for OpenOCD download rule
-BASE_ADDR := 0x00000000
-
-# Download command
-DOWNLOAD_CMD := openocd -f $(CFG_FILE) -c "init" -c "reset halt" -c "flash write_image erase unlock $(OUT_PATH)/$(PROJECT_NAME).bin $(BASE_ADDR) bin" -c "reset halt" -c "resume" -c "shutdown"
-
-# Erase command
-ERASE_CMD := openocd -f $(CFG_FILE) -c "init" -c "halt 0" -c "flash erase_sector 0 0 last" -c "exit"
+fatfs_INC_FOLDERS += modules/lpc1769/fatfs/inc
