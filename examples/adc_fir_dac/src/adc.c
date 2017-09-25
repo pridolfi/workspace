@@ -16,13 +16,18 @@ int adcFlag=0;
 #define ADC_IRQn ADC0_IRQn
 #endif
 
-/* P0.23 -> AD0 */
 void adcInit(void)
 {
 	ADC_CLOCK_SETUP_T adc;
 
 	Chip_ADC_Init(LPC_ADC, &adc);
+#ifdef lpc4337_m4
 	Chip_ADC_SetSampleRate(LPC_ADC, &adc, 88000);
+#else
+	Chip_ADC_SetSampleRate(LPC_ADC, &adc, 22000);
+	/* P0.24 -> AD1 */
+	Chip_IOCON_PinMux(LPC_IOCON, 0, 24, IOCON_MODE_INACT, IOCON_FUNC1);
+#endif
 
 	Chip_ADC_EnableChannel(LPC_ADC, ADC_CH1, ENABLE);
 	Chip_ADC_Int_SetChannelCmd(LPC_ADC, ADC_CH1, ENABLE);

@@ -14,6 +14,8 @@ void dacInit(void)
 	Chip_DAC_Init(LPC_DAC);
 #ifdef lpc4337_m4
 	Chip_DAC_ConfigDAConverterControl(LPC_DAC, DAC_DMA_ENA);
+#else
+	Chip_IOCON_PinMux(LPC_IOCON, 0, 26, IOCON_MODE_INACT, IOCON_FUNC2);
 #endif
 }
 
