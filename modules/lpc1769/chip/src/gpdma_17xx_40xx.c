@@ -213,7 +213,7 @@ volatile const void *GPDMA_LUTPerAddr[] = {
 	(&LPC_SSP0->DR),					// SSP0 Rx
 	(&LPC_SSP1->DR),					// SSP1 Tx
 	(&LPC_SSP1->DR),					// SSP1 Rx
-	(&LPC_ADC->GDR),				// ADC
+	(&LPC_ADC->DR[0]),				// ADC
 	(&LPC_I2S->TXFIFO),				// I2S Tx
 	(&LPC_I2S->RXFIFO),				// I2S Rx
 	(&LPC_DAC->CR),					// DAC
