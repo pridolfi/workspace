@@ -89,42 +89,37 @@ espStatus_e espCommand(char * cmd, char * rsp, int rsplen)
 
     rs232Print(cmd);
 
-    for(i = 0; i < BUF_LEN; i++) buffer[i] = 0;
+    for(i = 0; i < BUF_LEN; i++) {
+    	buffer[i] = 0;
+    }
 
-    do
-    {
+    do {
         i = uartRecv(CIAA_UART_232, buffer+pos, BUF_LEN-pos);
         pos += i;
 
         to = (i == 0) ? to+1 : 0;
 
-        if(memmem(buffer, BUF_LEN, "\r\nready\r\n", 9))
-        {
+        if (memmem(buffer, BUF_LEN, "\r\nready\r\n", 9)) {
             rv = ESP_READY;
         }
-        if(memmem(buffer, BUF_LEN, "\r\nOK\r\n", 6))
-        {
+        if (memmem(buffer, BUF_LEN, "\r\nOK\r\n", 6)) {
             rv = ESP_OK;
         }
-        if(memmem(buffer, BUF_LEN, "\r\nERROR\r\n", 9))
-        {
+        if (memmem(buffer, BUF_LEN, "\r\nERROR\r\n", 9)) {
             rv = ESP_ERROR;
         }
-        if(memmem(buffer, BUF_LEN, "\r\nno change\r\n", 13))
-        {
+        if (memmem(buffer, BUF_LEN, "\r\nno change\r\n", 13)) {
             rv = ESP_NO_CHANGE;
         }
 
         pausems(100);
 
-    }while((to < TIMEOUT)&&(rv == ESP_TIMEOUT)&&(pos < BUF_LEN));
+    } while ((to < TIMEOUT)&&(rv == ESP_TIMEOUT)&&(pos < BUF_LEN));
 
-    if(pos >= BUF_LEN)
-    {
+    if (pos >= BUF_LEN) {
         rv = ESP_BUF_FULL;
     }
-    if((to < TIMEOUT)&&(rsp != NULL)&&(rsplen > 0))
-    {
+    if ((to < TIMEOUT)&&(rsp != NULL)&&(rsplen > 0)) {
         strncpy(rsp, buffer, rsplen);
     }
 
@@ -136,11 +131,9 @@ espStatus_e espInit(espMode_e m)
     int rv;
     /* user must initialize RS232 UART!!! */
     rv = espCommand("AT+RST\r\n", 0, 0);
-    if(rv == ESP_OK)
-    {
+    if (rv == ESP_OK) {
         rv = espCommand("", 0, 0);
-        if(rv == ESP_READY)
-        {
+        if (rv == ESP_READY) {
             char str[100];
             sprintf(str, "AT+CWMODE=%u\r\n", m);
             rv = espCommand(str, 0, 0);
@@ -183,8 +176,7 @@ int espGetData(void * data, int len)
     int i;
     static int pos = 0;
     char * start;
-    if(pos == 0)
-    {
+    if (pos == 0) {
         bzero(buffer, BUF_LEN);
     }
 
@@ -192,8 +184,7 @@ int espGetData(void * data, int len)
     pos += i;
 
     start = memmem(buffer, pos, "\r\n+IPD,", 7);
-    if(start)
-    {
+    if (start) {
         int nbytes = atoi(start+7);
 
         memcpy(data, index(start+7, ':')+1, nbytes > len ? len : nbytes);

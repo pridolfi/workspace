@@ -3,10 +3,7 @@
  *
  */
 
-
-#include "../../esp8266_app/inc/newlib_stubs.h"
-
-
+#include "newlib_stubs.h"
 
 #ifdef errno
 #undef errno

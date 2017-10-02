@@ -104,14 +104,12 @@ int main(void)
 
 	ciaaWriteOutput(LEDR, 1);
 
-	do
-	{
+	do {
 	    s = espInit(ESP_STATION);
 	    pausems(100);
-	}while((s != ESP_NO_CHANGE)&&(s != ESP_OK));
+	} while ((s != ESP_NO_CHANGE)&&(s != ESP_OK));
 
-    if((s == ESP_NO_CHANGE)||(s == ESP_OK))
-    {
+    if ((s == ESP_NO_CHANGE)||(s == ESP_OK)) {
         printf("ESP Ready!\r\n");
         ciaaWriteOutput(LEDG, 1);
 
@@ -119,45 +117,33 @@ int main(void)
 
         s = espConnectToAP("PabloN5", "linuxrulez!");
 
-        if(s == ESP_OK)
-        {
+        if (s == ESP_OK) {
             bzero(buffer, BUF_LEN);
             s = espGetIP(buffer, BUF_LEN);
-            if(s == ESP_OK)
-            {
+            if (s == ESP_OK) {
                 printf("Done! IP: %s", buffer);
-
                 s = espStartUDP("192.168.43.40", 8000, 8001);
-                if(s == ESP_OK)
-                {
+                if (s == ESP_OK) {
                     printf("Sending to port 8000\r\n");
                     ciaaWriteOutput(LEDR, 0);
-                }
-                else
-                {
+                } else {
                     printf("Error %d :(\r\n", s);
                 }
             }
-        }
-        else
-        {
+        } else {
             printf("Error %d :(\r\n", s);
         }
-    }
-    else
-    {
+    } else {
         printf("Error %d :(\r\n", s);
     }
 
     int rv;
 
-	while(1)
-	{
+	while (1) {
 		pausems(500);
 		bzero(buffer, BUF_LEN);
 		rv = espGetData(buffer, BUF_LEN);
-		if(rv > 0)
-		{
+		if (rv > 0) {
 			buffer[rv] = 0;
 		    printf("Se recibieron %u bytes: %s.\r\n", rv, buffer);
 		    espSendData(buffer, rv);

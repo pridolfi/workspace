@@ -1,6 +1,6 @@
-/* Copyright Year, Author
+/* Copyright 2015, Pablo Ridolfi
  *
- * This file is part of a project.
+ * This file is part of ESP8266_App.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -32,26 +32,6 @@
 
 #ifndef _MAIN_H_
 #define _MAIN_H_
-/** @brief Brief for this header file.
- **
- ** Full description for this header file.
- **
- **/
-
-/** \addtogroup groupName Group Name
- ** @{ */
-
-/*
- * Initials    Name
- * ---------------------------
- * FN          Full Name
- */
-
-/*
- * modification history (new versions first)
- * -----------------------------------------------------------
- * yyyymmdd v0.0.1 FN Initial release.
- */
 
 /*==================[inclusions]=============================================*/
 
@@ -77,6 +57,5 @@ extern "C" {
 }
 #endif
 
-/** @} doxygen end group definition */
 /*==================[end of file]============================================*/
 #endif /* #ifndef _MAIN_H_ */
