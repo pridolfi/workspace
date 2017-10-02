@@ -29,11 +29,10 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-esp8266_driver_PATH := examples/esp8266_driver
+ciaa_PATH := modules/lpc1769/ciaa
 
-esp8266_driver_SRC_FILES := $(wildcard $(esp8266_driver_PATH)/src/*.c) \
-                  $(wildcard $(esp8266_driver_PATH)/src/*.S)
+ciaa_SRC_FILES += $(wildcard $(ciaa_PATH)/src/*.c)
 
-esp8266_driver_INC_FOLDERS := $(esp8266_driver_PATH)/inc
+ciaa_SRC_FOLDERS += $(ciaa_PATH)/src
 
-esp8266_driver_SRC_FOLDERS := $(esp8266_driver_PATH)/src
+ciaa_INC_FOLDERS += $(ciaa_PATH)/inc
