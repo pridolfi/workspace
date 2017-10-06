@@ -36,7 +36,7 @@
 TARGET_NAME := lpc4337_m4
 
 # Default cross-toolchain
-CROSS_PREFIX ?= arm-none-eabi-
+CROSS_COMPILE ?= arm-none-eabi-
 
 # variables de rutas o carpetas
 OUT_PATH = out/$(TARGET_NAME)
@@ -45,14 +45,14 @@ OBJ_PATH = $(OUT_PATH)/obj
 # Defined symbols
 SYMBOLS += -DDEBUG -DCORE_M4 -D__USE_LPCOPEN -D__LPC43XX__ -D__CODE_RED \
            -DLPC43_MULTICORE_M0APP -D__MULTICORE_MASTER \
-					 -D__MULTICORE_MASTER_SLAVE_M0APP
+					 -D__MULTICORE_MASTER_SLAVE_M0APP -D__FPU_PRESENT
 
 # Compilation flags
-CFLAGS  := -Wall -ggdb3 -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 \
+CFLAGS  += -Wall -ggdb3 -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 \
            -mfloat-abi=softfp -fdata-sections -ffunction-sections
 
 # Linking flags
-LFLAGS  := -nostdlib -fno-builtin -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 \
+LFLAGS  += -nostdlib -fno-builtin -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 \
            -mfloat-abi=softfp -Xlinker -Map=$(OUT_PATH)/$(PROJECT_NAME).map \
 			  -Wl,--gc-sections
 

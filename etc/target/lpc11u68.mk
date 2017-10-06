@@ -36,7 +36,7 @@
 TARGET_NAME := lpc11u68
 
 # Default cross-toolchain
-CROSS_PREFIX ?= arm-none-eabi-
+CROSS_COMPILE ?= arm-none-eabi-
 
 # variables de rutas o carpetas
 OUT_PATH = out/$(TARGET_NAME)

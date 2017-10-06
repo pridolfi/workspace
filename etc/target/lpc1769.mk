@@ -39,7 +39,7 @@ OUT_PATH := out/$(TARGET_NAME)
 OBJ_PATH := $(OUT_PATH)/obj
 
 # Default cross-toolchain
-CROSS_PREFIX ?= arm-none-eabi-
+CROSS_COMPILE ?= arm-none-eabi-
 
 # Defined symbols
 SYMBOLS := -DDEBUG -DCORE_M3 -D__USE_LPCOPEN -D__LPC17XX__ -D__CODE_RED
