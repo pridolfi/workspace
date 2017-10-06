@@ -1,7 +1,6 @@
-/* Copyright 2016, Pablo Ridolfi
- * All rights reserved.
+/* Copyright 2015, Pablo Ridolfi
  *
- * This file is part of Workspace.
+ * This file is part of CIAA-BM.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -30,42 +29,65 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  */
- 
-#ifndef CIAAIO_H_
-#define CIAAIO_H_
 
-#include "chip.h"
+/** @brief SysTick management.
+ **
+ **/
 
-#define ciaaDigitalInputs() ((uint8_t)((Chip_GPIO_ReadValue(LPC_GPIO_PORT,3) & (0x0F<<11))>>7)|(Chip_GPIO_ReadValue(LPC_GPIO_PORT,2) & 0x0F))
+/** \addtogroup ciaa-bm CIAA-BM
+ ** @{ */
 
-typedef struct
+/*
+ * Initials     Name
+ * ---------------------------
+ * PR           Pablo Ridolfi
+ */
+
+/*
+ * modification history (new versions first)
+ * -----------------------------------------------------------
+ * 20150612 v0.0.1   PR first version
+ */
+
+/*==================[inclusions]=============================================*/
+
+#include "ciaaIO.h"
+
+/*==================[macros and definitions]=================================*/
+
+/*==================[internal data declaration]==============================*/
+
+/*==================[internal functions declaration]=========================*/
+
+/*==================[internal data definition]===============================*/
+
+static uint32_t pausemscont;
+
+/*==================[external data definition]===============================*/
+
+/*==================[internal functions definition]==========================*/
+
+/*==================[external functions definition]==========================*/
+
+void SysTick_Handler(void)
 {
-	int port;
-	int bit;
-}ciaaPin_t;
+    if (pausemscont) {
+    	pausemscont--;
+    }
+}
 
-typedef enum
+void pausems(int t)
 {
-	TEC1,
-	TEC2,
-	TEC3,
-	TEC4
-}edu_ciaa_nxp_tec_e;
+    pausemscont = t;
+    while (pausemscont > 0) {
+    	__WFI();
+    }
+}
 
-typedef enum
+int ciaaTickInit(void)
 {
-	LEDR,
-	LEDG,
-	LEDB,
-	LED1,
-	LED2,
-	LED3
-}edu_ciaa_nxp_led_e;
+    return SysTick_Config(SystemCoreClock/1000);
+}
 
-void ciaaIOInit(void);
-uint32_t ciaaWriteOutput(uint32_t outputNumber, uint32_t value);
-uint32_t ciaaReadInput(uint32_t inputNumber);
-uint32_t ciaaReadOutput(uint32_t outputNumber);
-void ciaaToggleOutput(uint32_t outputNumber);
-
-#endif /* CIAAIO_H_ */
+/** @} doxygen end group definition */
+/*==================[end of file]============================================*/

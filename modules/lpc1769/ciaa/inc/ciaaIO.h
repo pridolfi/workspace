@@ -36,8 +36,6 @@
 
 #include "chip.h"
 
-#define ciaaDigitalInputs() ((uint8_t)((Chip_GPIO_ReadValue(LPC_GPIO_PORT,3) & (0x0F<<11))>>7)|(Chip_GPIO_ReadValue(LPC_GPIO_PORT,2) & 0x0F))
-
 typedef struct
 {
 	int port;
@@ -47,9 +45,7 @@ typedef struct
 typedef enum
 {
 	TEC1,
-	TEC2,
-	TEC3,
-	TEC4
+	TEC2
 }edu_ciaa_nxp_tec_e;
 
 typedef enum
@@ -57,9 +53,7 @@ typedef enum
 	LEDR,
 	LEDG,
 	LEDB,
-	LED1,
-	LED2,
-	LED3
+	LED0
 }edu_ciaa_nxp_led_e;
 
 void ciaaIOInit(void);

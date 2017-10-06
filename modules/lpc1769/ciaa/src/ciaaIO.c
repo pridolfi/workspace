@@ -30,42 +30,55 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  */
- 
-#ifndef CIAAIO_H_
-#define CIAAIO_H_
 
-#include "chip.h"
+#include "ciaaIO.h"
 
-#define ciaaDigitalInputs() ((uint8_t)((Chip_GPIO_ReadValue(LPC_GPIO_PORT,3) & (0x0F<<11))>>7)|(Chip_GPIO_ReadValue(LPC_GPIO_PORT,2) & 0x0F))
+#define IN_COUNT 2
+#define OUT_COUNT 4
+ciaaPin_t inputs[IN_COUNT] = { {0,18},{0,1} };
+ciaaPin_t outputs[OUT_COUNT] = { {2,2},{2,3},{2,4},{0,22} };
 
-typedef struct
+void ciaaIOInit(void)
 {
-	int port;
-	int bit;
-}ciaaPin_t;
+	Chip_GPIO_Init(LPC_GPIO);
+	Chip_IOCON_Init(LPC_IOCON);
+	for (int i=0; i<IN_COUNT; i++) {
+		Chip_GPIO_SetPinDIRInput(LPC_GPIO, inputs[i].port, inputs[i].bit);
+		Chip_IOCON_PinMux(LPC_IOCON, inputs[i].port, inputs[i].bit, IOCON_MODE_PULLUP, IOCON_FUNC0);
+	}
+	for (int i=0; i<OUT_COUNT; i++) {
+		Chip_GPIO_SetPinDIROutput(LPC_GPIO, inputs[i].port, inputs[i].bit);
+		Chip_GPIO_SetPinOutLow(LPC_GPIO, inputs[i].port, inputs[i].bit);
+		Chip_IOCON_PinMux(LPC_IOCON, inputs[i].port, inputs[i].bit, IOCON_MODE_PULLUP, IOCON_FUNC0);
+	}
+}
 
-typedef enum
+uint32_t ciaaReadInput(uint32_t inputNumber)
 {
-	TEC1,
-	TEC2,
-	TEC3,
-	TEC4
-}edu_ciaa_nxp_tec_e;
+	return Chip_GPIO_ReadPortBit(LPC_GPIO,
+			inputs[inputNumber].port,
+			inputs[inputNumber].bit);
+}
 
-typedef enum
+uint32_t ciaaReadOutput(uint32_t outputNumber)
 {
-	LEDR,
-	LEDG,
-	LEDB,
-	LED1,
-	LED2,
-	LED3
-}edu_ciaa_nxp_led_e;
+	return Chip_GPIO_ReadPortBit(LPC_GPIO,
+			outputs[outputNumber].port,
+			outputs[outputNumber].bit);
+}
 
-void ciaaIOInit(void);
-uint32_t ciaaWriteOutput(uint32_t outputNumber, uint32_t value);
-uint32_t ciaaReadInput(uint32_t inputNumber);
-uint32_t ciaaReadOutput(uint32_t outputNumber);
-void ciaaToggleOutput(uint32_t outputNumber);
+uint32_t ciaaWriteOutput(uint32_t outputNumber, uint32_t value)
+{
+	Chip_GPIO_SetPinState(LPC_GPIO,
+			outputs[outputNumber].port,
+			outputs[outputNumber].bit,
+			value);
+	return 0;
+}
 
-#endif /* CIAAIO_H_ */
+void ciaaToggleOutput(uint32_t outputNumber)
+{
+	Chip_GPIO_SetPinToggle(LPC_GPIO,
+			outputs[outputNumber].port,
+			outputs[outputNumber].bit);
+}

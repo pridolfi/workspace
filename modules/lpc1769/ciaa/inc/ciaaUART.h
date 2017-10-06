@@ -31,41 +31,33 @@
  *
  */
  
-#ifndef CIAAIO_H_
-#define CIAAIO_H_
+#ifndef CIAAUART_H_
+#define CIAAUART_H_
 
 #include "chip.h"
+#include "string.h"
 
-#define ciaaDigitalInputs() ((uint8_t)((Chip_GPIO_ReadValue(LPC_GPIO_PORT,3) & (0x0F<<11))>>7)|(Chip_GPIO_ReadValue(LPC_GPIO_PORT,2) & 0x0F))
-
-typedef struct
+typedef enum _ciaaUarts_e
 {
-	int port;
-	int bit;
-}ciaaPin_t;
+	CIAA_UART_USB = 0,
+	CIAA_UART_232 = 1
+}ciaaUART_e;
 
-typedef enum
+#define dbgPrint(x)   uartSend(0, (uint8_t *)(x), strlen(x))
+#define rs232Print(x) uartSend(1, (uint8_t *)(x), strlen(x))
+
+#define UART_BUF_SIZE	512
+#define UART_RX_FIFO_SIZE 16
+
+typedef struct _uartData
 {
-	TEC1,
-	TEC2,
-	TEC3,
-	TEC4
-}edu_ciaa_nxp_tec_e;
+	LPC_USART_T * uart;
+	RINGBUFF_T * rrb;
+	RINGBUFF_T * trb;
+}uartData_t;
 
-typedef enum
-{
-	LEDR,
-	LEDG,
-	LEDB,
-	LED1,
-	LED2,
-	LED3
-}edu_ciaa_nxp_led_e;
+void ciaaUARTInit(void);
+int uartSend(ciaaUART_e nUART, void * data, int datalen);
+int uartRecv(ciaaUART_e nUART, void * data, int datalen);
 
-void ciaaIOInit(void);
-uint32_t ciaaWriteOutput(uint32_t outputNumber, uint32_t value);
-uint32_t ciaaReadInput(uint32_t inputNumber);
-uint32_t ciaaReadOutput(uint32_t outputNumber);
-void ciaaToggleOutput(uint32_t outputNumber);
-
-#endif /* CIAAIO_H_ */
+#endif /* CIAAUART_H_ */

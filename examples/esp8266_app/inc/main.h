@@ -1,7 +1,6 @@
-/* Copyright 2016, Pablo Ridolfi
- * All rights reserved.
+/* Copyright 2015, Pablo Ridolfi
  *
- * This file is part of Workspace.
+ * This file is part of ESP8266_App.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -30,42 +29,33 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  */
- 
-#ifndef CIAAIO_H_
-#define CIAAIO_H_
 
-#include "chip.h"
+#ifndef _MAIN_H_
+#define _MAIN_H_
 
-#define ciaaDigitalInputs() ((uint8_t)((Chip_GPIO_ReadValue(LPC_GPIO_PORT,3) & (0x0F<<11))>>7)|(Chip_GPIO_ReadValue(LPC_GPIO_PORT,2) & 0x0F))
+/*==================[inclusions]=============================================*/
 
-typedef struct
-{
-	int port;
-	int bit;
-}ciaaPin_t;
+#include "board.h"
 
-typedef enum
-{
-	TEC1,
-	TEC2,
-	TEC3,
-	TEC4
-}edu_ciaa_nxp_tec_e;
+/*==================[cplusplus]==============================================*/
 
-typedef enum
-{
-	LEDR,
-	LEDG,
-	LEDB,
-	LED1,
-	LED2,
-	LED3
-}edu_ciaa_nxp_led_e;
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-void ciaaIOInit(void);
-uint32_t ciaaWriteOutput(uint32_t outputNumber, uint32_t value);
-uint32_t ciaaReadInput(uint32_t inputNumber);
-uint32_t ciaaReadOutput(uint32_t outputNumber);
-void ciaaToggleOutput(uint32_t outputNumber);
+/*==================[macros]=================================================*/
 
-#endif /* CIAAIO_H_ */
+/*==================[typedef]================================================*/
+
+/*==================[external data declaration]==============================*/
+
+/*==================[external functions declaration]=========================*/
+
+/*==================[cplusplus]==============================================*/
+
+#ifdef __cplusplus
+}
+#endif
+
+/*==================[end of file]============================================*/
+#endif /* #ifndef _MAIN_H_ */
