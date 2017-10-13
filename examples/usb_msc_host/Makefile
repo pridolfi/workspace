@@ -33,7 +33,8 @@
 PROJECT_NAME := $(notdir $(PROJECT))
 
 # Modules needed by the application
-PROJECT_MODULES := modules/$(TARGET)/lpcusblib \
+PROJECT_MODULES := modules/$(TARGET)/ciaa \
+                   modules/$(TARGET)/lpcusblib \
                    modules/$(TARGET)/fatfs \
                    modules/$(TARGET)/base \
                    modules/$(TARGET)/board \
