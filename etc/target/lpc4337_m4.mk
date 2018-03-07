@@ -48,7 +48,7 @@ SYMBOLS += -DDEBUG -DCORE_M4 -D__USE_LPCOPEN -D__LPC43XX__ -D__CODE_RED \
 					 -D__MULTICORE_MASTER_SLAVE_M0APP -D__FPU_PRESENT
 
 # Compilation flags
-CFLAGS  += -Wall -ggdb3 -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 \
+CFLAGS  += -Wall -ggdb3 -std=c99 -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 \
            -mfloat-abi=softfp -fdata-sections -ffunction-sections
 
 # Linking flags
