@@ -38,6 +38,7 @@ PROJECT = examples/blinky
 #PROJECT = examples/blinky_rit
 #PROJECT = examples/adc_fir_dac
 #PROJECT = examples/freertos_blinky
+#PROJECT = examples/statechart
 #PROJECT = projects/my_project
 
 # current target
