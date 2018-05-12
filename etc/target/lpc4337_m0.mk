@@ -51,7 +51,7 @@ CFLAGS  := -Wall -ggdb3 -mcpu=cortex-m0 -mthumb -fdata-sections -ffunction-secti
 
 # Linking flags
 LFLAGS  := -nostdlib -fno-builtin -mcpu=cortex-m0 -mthumb \
-			  -Xlinker -Map=$(OUT_PATH)/$(PROJECT_NAME).map \
+			  -Xlinker -Map=$(OUT_PATH)/firmware.map \
 			  -Wl,--gc-sections
 
 # Linker scripts
@@ -65,7 +65,7 @@ CFG_FILE := etc/openocd/lpc4337.cfg
 BASE_ADDR := 0x1B000000
 
 # Download command
-DOWNLOAD_CMD := openocd -f $(CFG_FILE) -c "init" -c "halt 0" -c "flash write_image erase unlock $(OUT_PATH)/$(PROJECT_NAME).bin $(BASE_ADDR) bin" -c "reset run" -c "shutdown"
+DOWNLOAD_CMD := openocd -f $(CFG_FILE) -c "init" -c "halt 0" -c "flash write_image erase unlock $(OUT_PATH)/firmware.bin $(BASE_ADDR) bin" -c "reset run" -c "shutdown"
 
 # Erase command
 ERASE_CMD := openocd -f $(CFG_FILE) -c "init" -c "halt 0" -c "flash erase_sector 0 0 last" -c "exit"

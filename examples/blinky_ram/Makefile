@@ -51,4 +51,4 @@ PROJECT_ASM_FILES := $(wildcard $(PROJECT)/src/*.S)
 LINK_RAM = 1
 
 #Post build: add size to binary image
-POST_BUILD_CMD += ./examples/boot/prepare_image.py $(OUT_PATH)/$(PROJECT_NAME).bin $(OUT_PATH)/$(PROJECT_NAME)_image.bin
+POST_BUILD_CMD += ./examples/boot/prepare_image.py $(OUT_PATH)/firmware.bin $(OUT_PATH)/firmware_image.bin

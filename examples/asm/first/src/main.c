@@ -88,8 +88,10 @@ int main(void)
 
 	i = asmAdd(5, -4);
 
-	for (i=0; i<N; i++) vec[i] = i;
-
+	for (i=0; i<N; i++) {
+		vec[i] = i;
+	}
+	
 	*DWT_CTRL  |= 1;
 
 	*DWT_CYCCNT = 0;
@@ -99,6 +101,7 @@ int main(void)
 	zero_c(vec, N);
 
 	while (1) {
+		i++;
 	}
 }
 

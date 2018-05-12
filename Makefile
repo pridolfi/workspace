@@ -84,9 +84,9 @@ all : $(PROJECT_NAME)
 
 $(PROJECT_NAME): $(foreach MOD,$(notdir $(PROJECT_MODULES)),lib$(MOD).a) $(PROJECT_OBJS)
 	@echo "*** linking project $@ ***"
-	$(CROSS_COMPILE)gcc $(LFLAGS) $(LD_FILE) -o $(OUT_PATH)/$(PROJECT_NAME).axf $(PROJECT_OBJ_FILES) $(SLAVE_OBJ_FILE) -L$(OUT_PATH) $(addprefix -l,$(notdir $(PROJECT_MODULES))) $(addprefix -L,$(EXTERN_LIB_FOLDERS)) $(addprefix -l,$(notdir $(EXTERN_LIBS)))
-	@$(CROSS_COMPILE)size $(OUT_PATH)/$(PROJECT_NAME).axf
-	@$(CROSS_COMPILE)objcopy -v -O binary $(OUT_PATH)/$(PROJECT_NAME).axf $(OUT_PATH)/$(PROJECT_NAME).bin
+	$(CROSS_COMPILE)gcc $(LFLAGS) $(LD_FILE) -o $(OUT_PATH)/firmware.axf $(PROJECT_OBJ_FILES) $(SLAVE_OBJ_FILE) -L$(OUT_PATH) $(addprefix -l,$(notdir $(PROJECT_MODULES))) $(addprefix -L,$(EXTERN_LIB_FOLDERS)) $(addprefix -l,$(notdir $(EXTERN_LIBS)))
+	@$(CROSS_COMPILE)size $(OUT_PATH)/firmware.axf
+	@$(CROSS_COMPILE)objcopy -v -O binary $(OUT_PATH)/firmware.axf $(OUT_PATH)/firmware.bin
 	@echo "*** post-build ***"
 	@$(POST_BUILD_CMD)
 

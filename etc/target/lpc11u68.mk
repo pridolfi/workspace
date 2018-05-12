@@ -65,7 +65,7 @@ CFG_FILE := etc/openocd/$(TARGET_NAME).cfg
 BASE_ADDR := 0x00000000
 
 # Download command
-DOWNLOAD_CMD := openocd -f $(CFG_FILE) -c "init" -c "halt 0" -c "flash write_image erase unlock $(OUT_PATH)/$(PROJECT_NAME).bin $(BASE_ADDR) bin" -c "reset run" -c "shutdown"
+DOWNLOAD_CMD := openocd -f $(CFG_FILE) -c "init" -c "halt 0" -c "flash write_image erase unlock $(OUT_PATH)/firmware.bin $(BASE_ADDR) bin" -c "reset run" -c "shutdown"
 
 # Post-build command
 POST_BUILD_CMD += 

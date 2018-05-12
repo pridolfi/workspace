@@ -50,7 +50,7 @@ CFLAGS  := -Wall -ggdb3 -mcpu=cortex-m3 -mthumb -fdata-sections \
 
 # Linking flags
 LFLAGS  := -nostdlib -fno-builtin -mcpu=cortex-m3 -mthumb -Xlinker \
-			  -Map=$(OUT_PATH)/$(PROJECT_NAME).map -Wl,--gc-sections
+			  -Map=$(OUT_PATH)/firmware.map -Wl,--gc-sections
 
 # Linker scripts
 ifdef USE_SEMIHOSTING
@@ -66,7 +66,7 @@ CFG_FILE := etc/openocd/lpc1769.cfg
 BASE_ADDR := 0x00000000
 
 # Download command
-DOWNLOAD_CMD := openocd -f $(CFG_FILE) -c "init" -c "reset halt" -c "flash write_image erase unlock $(OUT_PATH)/$(PROJECT_NAME).bin $(BASE_ADDR) bin" -c "reset halt" -c "resume" -c "shutdown"
+DOWNLOAD_CMD := openocd -f $(CFG_FILE) -c "init" -c "reset halt" -c "flash write_image erase unlock $(OUT_PATH)/firmware.bin $(BASE_ADDR) bin" -c "reset halt" -c "resume" -c "shutdown"
 
 # Erase command
 ERASE_CMD := openocd -f $(CFG_FILE) -c "init" -c "halt 0" -c "flash erase_sector 0 0 last" -c "exit"
