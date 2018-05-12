@@ -1,0 +1,23 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "LPC4337",
+            "type": "cppdbg",
+            "request": "launch",
+            "miDebuggerPath": "arm-none-eabi-gdb",
+            "targetArchitecture": "ARM",
+            "program": "${workspaceRoot}/out/lpc4337_m4/firmware.axf",
+            "setupCommands": [
+                {"text": "target extended-remote localhost:3333"},
+                {"text": "load ${workspaceRoot}/out/lpc4337_m4/firmware.axf"},
+                {"text": "monitor reset halt"},
+                {"text": "monitor flash write_image erase unlock ${workspaceRoot}/out/lpc4337_m4/firmware.bin 0x1A000000 bin"},
+                {"text": "monitor reset halt"}
+            ],
+            "launchCompleteCommand": "exec-continue",
+            "filterStderr": true,
+            "cwd": "${cwd}"
+        }
+    ]
+}
