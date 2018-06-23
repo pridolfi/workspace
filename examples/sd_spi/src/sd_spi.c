@@ -64,58 +64,95 @@ static void initHardware(void);
 
 static void initHardware(void)
 {
-    Board_Init();
-    SystemCoreClockUpdate();
-    SysTick_Config(SystemCoreClock / 1000);
+	Board_Init();
+	SystemCoreClockUpdate();
+	SysTick_Config(SystemCoreClock / 1000);
 
-    /* SPI configuration */
-    Board_SSP_Init(LPC_SSP1);
-    Chip_SSP_Init(LPC_SSP1);
-    Chip_SSP_Enable(LPC_SSP1);
+	/* SPI configuration */
+	Board_SSP_Init(LPC_SSP1);
+	Chip_SSP_Init(LPC_SSP1);
+	Chip_SSP_Enable(LPC_SSP1);
+
+	/* EDU-CIAA USART2 configuration */
+	// P7_1 pin -> U2_TXD @ FUNC6 [UM:Table 190]
+	// P7_2 pin -> U2_RXD @ FUNC6
+	Chip_SCU_PinMuxSet(7, 1, SCU_MODE_FUNC6);  // [UM:17.4.1]
+	Chip_SCU_PinMuxSet(7, 2, SCU_MODE_INBUFF_EN | SCU_MODE_FUNC6);
+
+	// USART2 peripheral configuration
+	Chip_UART_Init(LPC_USART2);            // 8-N-1 and FIFOs enabled
+	Chip_UART_SetBaud(LPC_USART2, 115200); // [UM:40.6.3]
+	Chip_UART_TXEnable(LPC_USART2);        // [UM:40.6.20]
 }
 
 /*==================[external functions definition]==========================*/
 
 void SysTick_Handler(void)
 {
-    ms_ticks++;
+	ms_ticks++;
 
-    if (ms_ticks >= 10) {
-        ms_ticks = 0;
-        disk_timerproc();   /* Disk timer process */
-    }
+	if (ms_ticks >= 10) {
+		ms_ticks = 0;
+		disk_timerproc();   /* Disk timer process */
+	}
 }
 
 int main(void)
 {
-    UINT nbytes;
+	UINT nbytes;
 
-    initHardware();
+	initHardware();
 
-    /* Give a work area to the default drive */
-    if (f_mount(&fs, "", 0) != FR_OK) {
-        /* If this fails, it means that the function could
-         * not register a file system object.
-         * Check whether the SD card is correctly connected */
-    }
+	/* Give a work area to the default drive */
+	if (f_mount(&fs, "", 0) != FR_OK) {
+		/* If this fails, it means that the function could
+		 * not register a file system object.
+		 * Check whether the SD card is correctly connected */
+	}
 
-    /* Create/open a file, then write a string and close it */
-    if (f_open(&fp, FILENAME, FA_WRITE | FA_CREATE_ALWAYS) == FR_OK) {
-        f_write(&fp, "It works!\r\n", 11, &nbytes);
+	/* Create/open a file, then write a string and close it */
+	if (f_open(&fp, FILENAME, FA_WRITE | FA_CREATE_ALWAYS) == FR_OK) {
+		f_write(&fp, "It works!\r\n", 11, &nbytes);
 
-        f_close(&fp);
+		f_close(&fp);
 
-        if (nbytes == 11) {
-            /* Toggle a LED if the write operation was successful */
-            Board_LED_Toggle(0);
-        }
-    }
+		if (nbytes == 11) {
+			/* Toggle a LED if the write operation was successful */
+			Board_LED_Toggle(0);
+		}
+	}
 
-    while (1) {
-        __WFI();
-    }
+	/* List directory */
+	DIR dir;
+	FRESULT rc;
+	FILINFO fno;
+	char debugBuf[128];
 
-    return 0;
+	rc = f_opendir(&dir, "");
+	if (!rc) {
+		printf("\r\nDirectory listing...\r\n");
+		for (;; ) {
+			/* Read a directory item */
+			rc = f_readdir(&dir, &fno);
+			if (rc || !fno.fname[0]) {
+				break;					/* Error or end of dir */
+			}
+			if (fno.fattrib & AM_DIR) {
+				sprintf(debugBuf, "   <dir>  %s\r\n", fno.fname);
+			}
+			else {
+				sprintf(debugBuf, "   %8lu  %s\r\n", fno.fsize, fno.fname);
+			}
+			printf(debugBuf);
+		}
+	}
+	printf("\r\nTest completed.\r\n");
+
+	while (1) {
+		__WFI();
+	}
+
+	return 0;
 }
 
 /** @} doxygen end group definition */
