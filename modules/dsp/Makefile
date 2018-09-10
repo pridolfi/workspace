@@ -43,7 +43,8 @@ dsp_SRC_FILES := $(wildcard $(dsp_PATH)/src/*.c) \
                  $(wildcard $(dsp_PATH)/src/dspcode/MatrixFunctions/*.c) \
                  $(wildcard $(dsp_PATH)/src/dspcode/StatisticsFunctions/*.c) \
                  $(wildcard $(dsp_PATH)/src/dspcode/SupportFunctions/*.c) \
-                 $(wildcard $(dsp_PATH)/src/dspcode/TransformFunctions/*.c)
+                 $(wildcard $(dsp_PATH)/src/dspcode/TransformFunctions/*.c) \
+                 $(wildcard $(dsp_PATH)/src/dspcode/TransformFunctions/*.S)
 
 dsp_SRC_FOLDERS :=  $(dsp_PATH)/src \
                     $(dsp_PATH)/src/dspcode/BasicMathFunctions \
