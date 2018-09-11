@@ -53,8 +53,8 @@
 	.syntax unified
 	.cpu cortex-m4
 	.fpu softvfp
-	#define THUMB .thumb
-	#define CODESECT .section text
+	#define THUMB .thumb_func
+	#define CODESECT .text
 	#define EXPORT .global
 	#define PROC :
 	#define LABEL :
