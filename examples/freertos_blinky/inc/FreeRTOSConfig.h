@@ -41,17 +41,18 @@
  *----------------------------------------------------------*/
 
 #define configUSE_PREEMPTION		1
-#define configUSE_IDLE_HOOK			0
+#define configUSE_IDLE_HOOK			1
 #define configMAX_PRIORITIES		( 5 )
 #define configUSE_TICK_HOOK			1
 #define configCPU_CLOCK_HZ			( ( unsigned long ) SystemCoreClock )
 #define configTICK_RATE_HZ			( ( TickType_t ) 1000 )
-#define configMINIMAL_STACK_SIZE	( ( unsigned short ) 80 )
-#define configTOTAL_HEAP_SIZE		( ( size_t ) ( 19 * 1024 ) )
+#define configMINIMAL_STACK_SIZE	( ( unsigned short ) 128 )
+#define configTOTAL_HEAP_SIZE		( ( size_t ) ( 32 * 1024 ) )
 #define configMAX_TASK_NAME_LEN		( 12 )
 #define configUSE_TRACE_FACILITY	1
 #define configUSE_16_BIT_TICKS		0
-#define configIDLE_SHOULD_YIELD		0
+#define configUSE_MALLOC_FAILED_HOOK	1
+#define configIDLE_SHOULD_YIELD		1
 #define configUSE_CO_ROUTINES 		0
 #define configUSE_MUTEXES			1
 
@@ -75,36 +76,6 @@ to exclude the API function. */
 #define INCLUDE_vTaskDelayUntil				1
 #define INCLUDE_vTaskDelay					1
 #define INCLUDE_uxTaskGetStackHighWaterMark	1
-
-/* This demo makes use of one or more example stats formatting functions.  These
-format the raw data provided by the uxTaskGetSystemState() function in to human
-readable ASCII form.  See the notes in the implementation of vTaskList() within
-FreeRTOS/Source/tasks.c for limitations. */
-#define configUSE_STATS_FORMATTING_FUNCTIONS	1
-
-/*-----------------------------------------------------------
- * Ethernet configuration.
- *-----------------------------------------------------------*/
-
-/* MAC address configuration. */
-#define configMAC_ADDR0	0x00
-#define configMAC_ADDR1	0x12
-#define configMAC_ADDR2	0x13
-#define configMAC_ADDR3	0x10
-#define configMAC_ADDR4	0x15
-#define configMAC_ADDR5	0x11
-
-/* IP address configuration. */
-#define configIP_ADDR0		192
-#define configIP_ADDR1		168
-#define configIP_ADDR2		0
-#define configIP_ADDR3		201
-
-/* Netmask configuration. */
-#define configNET_MASK0		255
-#define configNET_MASK1		255
-#define configNET_MASK2		255
-#define configNET_MASK3		0
 
 /* Use the system definition, if there is one */
 #ifdef __NVIC_PRIO_BITS
