@@ -111,7 +111,10 @@ int main(void)
 	}
 
 	/* Create/open a file, then write a string and close it */
-	if (f_open(&fp, FILENAME, FA_WRITE | FA_CREATE_ALWAYS) == FR_OK) {
+	if (f_open(&fp, FILENAME, FA_WRITE | FA_OPEN_ALWAYS) == FR_OK) {
+
+		f_lseek(&fp, f_size(&fp));
+
 		f_write(&fp, "It works!\r\n", 11, &nbytes);
 
 		f_close(&fp);
