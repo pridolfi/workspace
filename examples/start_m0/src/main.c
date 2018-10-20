@@ -73,7 +73,7 @@ static void initHardware(void)
 	Board_Init();
 	SystemCoreClockUpdate();
 	SysTick_Config(SystemCoreClock / 1000);
-
+	
 	/* Start Cortex-M0 core */
 	cr_start_m0(SLAVE_M0APP, (uint8_t *)0x1B000000);
 }
@@ -101,6 +101,8 @@ int main(void)
 	{
 		Board_LED_Toggle(LED);
 		pausems(DELAY_MS);
+		__DSB();
+		__SEV(); /* IRQ to Cortex-M0 */
 	}
 }
 

@@ -81,6 +81,10 @@ static void initHardware(void)
 	NVIC_EnableIRQ(RITIMER_IRQn);
 	/* Set lowest priority for RIT */
 	NVIC_SetPriority(RITIMER_IRQn, (1<<__NVIC_PRIO_BITS) - 1);
+
+	/* enable Cortex-M4 IRQ */
+	NVIC_EnableIRQ(M4_IRQn);
+
 }
 
 static void pausems(uint32_t t)
@@ -104,13 +108,19 @@ void RIT_IRQHandler(void)
 	}
 }
 
+void MX_CORE_IRQHandler(void) 
+{
+	LPC_CREG->M4TXEVENT = 0; 	/* ACK */
+	Board_LED_Toggle(LED2); /* toggle another LED to indicate interrupt from the other core */
+}
+
 int main(void)
 {
 	initHardware();
 
 	while (1)
 	{
-		Board_LED_Toggle(LED);
+		Board_LED_Toggle(LED1);
 		pausems(DELAY_MS);
 	}
 }
