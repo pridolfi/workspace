@@ -16,11 +16,11 @@
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_K9_uQNT1EeWW7qBcXsHUvw" specification="entry/opLED(true)" name="ON" incomingTransitions="_Wpr5UNT1EeWW7qBcXsHUvw _iBEBQNT1EeWW7qBcXsHUvw _L0hJwNT5EeWW7qBcXsHUvw">
             <outgoingTransitions xmi:id="_qVlcMNT1EeWW7qBcXsHUvw" specification="evTick[iTick==MS_DELAY]&#xA;/iTick=0" target="_MnsP8NT1EeWW7qBcXsHUvw"/>
-            <outgoingTransitions xmi:id="_L0hJwNT5EeWW7qBcXsHUvw" specification="evTick[iTick&lt;MS_DELAY]&#xA;/iTick=iTick+1" target="_K9_uQNT1EeWW7qBcXsHUvw"/>
+            <outgoingTransitions xmi:id="_L0hJwNT5EeWW7qBcXsHUvw" specification="evTick[iTick&lt;MS_DELAY]&#xA;/iTick+=1" target="_K9_uQNT1EeWW7qBcXsHUvw"/>
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_MnsP8NT1EeWW7qBcXsHUvw" specification="entry/opLED(false)" name="OFF" incomingTransitions="_qVlcMNT1EeWW7qBcXsHUvw _YSY_sNT5EeWW7qBcXsHUvw">
             <outgoingTransitions xmi:id="_iBEBQNT1EeWW7qBcXsHUvw" specification="evTick[iTick==MS_DELAY]&#xA;/iTick=0" target="_K9_uQNT1EeWW7qBcXsHUvw"/>
-            <outgoingTransitions xmi:id="_YSY_sNT5EeWW7qBcXsHUvw" specification="evTick[iTick&lt;MS_DELAY]&#xA;/iTick=iTick+1" target="_MnsP8NT1EeWW7qBcXsHUvw"/>
+            <outgoingTransitions xmi:id="_YSY_sNT5EeWW7qBcXsHUvw" specification="evTick[iTick&lt;MS_DELAY]&#xA;/iTick+=1" target="_MnsP8NT1EeWW7qBcXsHUvw"/>
           </vertices>
         </regions>
       </vertices>
@@ -44,7 +44,7 @@
           </children>
           <styles xsi:type="notation:ShapeStyle" xmi:id="_9SGmAtT0EeWW7qBcXsHUvw" fontName="Verdana" fillColor="0" lineColor="16777215"/>
           <styles xsi:type="notation:NamedStyle" xmi:id="_9SGmA9T0EeWW7qBcXsHUvw" name="allowColors"/>
-          <layoutConstraint xsi:type="notation:Bounds" xmi:id="_9SH0I9T0EeWW7qBcXsHUvw" x="97" width="15" height="15"/>
+          <layoutConstraint xsi:type="notation:Bounds" xmi:id="_9SH0I9T0EeWW7qBcXsHUvw" x="108" width="15" height="15"/>
         </children>
         <children xmi:id="_9SJCQtT0EeWW7qBcXsHUvw" type="State" element="_9SH0JNT0EeWW7qBcXsHUvw">
           <children xsi:type="notation:DecorationNode" xmi:id="_9SJpU9T0EeWW7qBcXsHUvw" type="StateName">
