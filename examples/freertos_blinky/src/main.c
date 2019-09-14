@@ -59,6 +59,11 @@
 
 /*==================[internal data declaration]==============================*/
 
+typedef struct {
+	uint32_t led;
+	uint32_t tiempo;
+} task_param_t;
+
 /*==================[internal functions declaration]=========================*/
 
 /** @brief hardware initialization function
@@ -67,6 +72,18 @@
 static void initHardware(void);
 
 /*==================[internal data definition]===============================*/
+
+
+static task_param_t task_param1 = {
+		.led = 1,
+		.tiempo = 100,
+};
+
+static task_param_t task_param2 = {
+		.led = 5,
+		.tiempo = 700,
+};
+
 
 /*==================[external data definition]===============================*/
 
@@ -83,9 +100,11 @@ static void initHardware(void)
 
 static void task(void * a)
 {
+	task_param_t * task_param = (task_param_t *)a;
+
 	while (1) {
-		Board_LED_Toggle(0);
-		vTaskDelay(500 / portTICK_RATE_MS);
+		Board_LED_Toggle(task_param->led);
+		vTaskDelay(task_param->tiempo / portTICK_RATE_MS);
 	}
 }
 
@@ -95,7 +114,11 @@ int main(void)
 {
 	initHardware();
 
-	xTaskCreate(task, (const char *)"task", configMINIMAL_STACK_SIZE*2, 0, tskIDLE_PRIORITY+1, 0);
+	xTaskCreate(task, (const char *)"task1",
+			configMINIMAL_STACK_SIZE*2, &task_param1, tskIDLE_PRIORITY+1, 0);
+
+	xTaskCreate(task, (const char *)"task2",
+			configMINIMAL_STACK_SIZE*2, &task_param2, tskIDLE_PRIORITY+1, 0);
 
 	vTaskStartScheduler();
 
