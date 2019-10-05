@@ -41,12 +41,12 @@
 
 	.thumb_func
 zero:
-	push {z,lr}
-	eor z,z
-loop:
-	cbz len, end
-	sub len, 1
-	str z,[p,len,lsl 2]
-	b loop
-end:
-	pop {z,pc}
+	push {z,lr}         /* save registers to stack */
+	eor z,z             /* z ^= z */
+loop:                   /* label for loop begin */
+	cbz len, end        /* compare and branch to end if len == 0 */
+	sub len, 1          /* len -= 1 */
+	str z,[p,len,lsl 2] /* *(p + len << 2) = z */
+	b loop              /* jump to loop */
+end:                    /* label for end of loop */
+	pop {z,pc}          /* restore registers and return */
